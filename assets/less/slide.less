@@ -1,0 +1,179 @@
+.container {
+    position: relative;
+}
+
+.view-port {
+    --ratio: 1;
+    margin: 0 auto;
+    width: calc(800px/var(--ratio));
+    height: calc(450px/var(--ratio));
+}
+
+.slide-list {
+    width: 100%;
+    height: calc(450px/var(--ratio));
+    position: relative;
+}
+
+.slider-button {
+    font-size: 16px;
+    appearance: none;
+    border: 0;
+    border-radius: 0;
+    line-height: normal;
+    background-color: transparent;
+    position: absolute;
+    top: calc(50% - 2.5em);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 5em;
+    cursor: pointer;
+}
+
+.slider-button--prev {
+    left: -5em;
+}
+
+.slider-button--next {
+    right: -5em;
+}
+
+.slider-button-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.slider-button--prev .slider-button-circle {
+    transform: rotate(180deg);
+}
+
+.slider-button-circle-wrapper {
+    transform: rotate(-90deg);
+}
+
+.slider-button-circle-arrow {
+    stroke: #fff;
+    position: absolute;
+}
+
+.slider-button-circle__fill {
+    fill: #212123;
+}
+
+.slider-button--prev .slider-button__progress {
+    display: none;
+}
+
+@keyframes fillButtonProgressCircle {
+    0% {
+        stroke-dashoffset: 150
+    }
+
+    100% {
+        stroke-dashoffset: 0
+    }
+}
+
+.slider-button__progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    stroke: rgba(0, 0, 0, .3);
+    stroke-width: 2;
+    fill: transparent;
+    stroke-dasharray: 150;
+    animation-duration: calc(var(--animation-duration) + (var(--animation-delay) * 2));
+    animation-timing-function: linear;
+    animation-fill-mode: backwards;
+    stroke-dashoffset: 150;
+}
+
+.slider-button--next.is-active .slider-button__progress {
+    animation-name: fillButtonProgressCircle;
+}
+
+.slider-button-label {
+    /* font-size: .75em; */
+    white-space: nowrap;
+    color: #fff;
+    font-weight: 400;
+    text-transform: capitalize;
+    padding: 0.5em 0.625em;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, .85);
+    position: absolute;
+    transform: translateY(-1.5em);
+    opacity: 0;
+    transition: transform 250ms cubic-bezier(.165, .84, .44, 1), opacity 125ms cubic-bezier(.165, .84, .44, 1);
+    pointer-events: none;
+}
+
+.slider-button:hover .slider-button-label {
+    opacity: 1;
+    transform: translateY(-2.5em);
+}
+
+.slide-list-item {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+    position: absolute;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+        -webkit-transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), -webkit-filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    -webkit-transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+        -webkit-transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), -webkit-filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(calc(-8vw * var(--index-from-selected))) scale(var(--scale));
+    opacity: var(--opacity);
+    filter: blur(var(--blur));
+    z-index: var(--z-index);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.skin-wrapper {
+    height: 100%;
+    position: relative;
+}
+
+@font-face {
+    font-family: lishu;
+    src: url('../fonts/LS/LSK--GBK1-0-01.ttf');
+}
+
+.skin-label {
+    font-size: 24px;
+    position: absolute;
+    right: 2em;
+    top: 2.5em;
+    color: #fff;
+    font-family: lishu;
+    writing-mode: tb-rl;
+    text-align: center;
+}
+
+.skin-painter {
+    font-size: 16px;
+    position: absolute;
+    bottom: 2em;
+    right: 6em;
+    color: #ffffff;
+    --text-shadow: 0 1px 1px #333333;
+    text-shadow: var(--text-shadow);
+    cursor: pointer;
+}
+
+.skin {
+    height: 100%;
+    width: auto;
+}
+
+[v-cloak] {
+    display: none;
+}

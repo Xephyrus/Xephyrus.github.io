@@ -1,0 +1,11 @@
+<svg width="120" height="40" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="svg_1_blur">
+   <feGaussianBlur stdDeviation="0" in="SourceGraphic"/>
+  </filter>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <text filter="url(#svg_1_blur)" font-style="italic" xml:space="preserve" text-anchor="start" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif" font-size="24" id="svg_1" y="28.20001" x="4" stroke-width="0" stroke="#000" fill="#000000">Xephyrus</text>
+ </g>
+</svg>

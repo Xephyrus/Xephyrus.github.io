@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords"
+        content="Tutuapp,tutu,TUTU,Tutu,iOS,ios,iPhone,iPad,download Tutuapp,++apps,++app,hacked games,MOD,mod,Tutuapp vip,Tutuapp free,YouTube++ ,Pokemon Go Hack ,Pokemon Go ++,Last day on earth Hack,Spotify ++,Instagram++,ZiniTevi,8 Ball Pool Hack ,unc0ver,TikTok++,Jurassic World Alive Hack ,WhatsApp++,twitter++,Facebook++,Plants vs. Zombies 2 Hack,Minecraft MOD,Grand Theft Auto: San Andreas MOD,Poppy Playtime Chapter 1 MOD,Clash of Clans MOD,Spotify Music MOD,Subway Surfers MOD,Garena Free Fire MOD,Shadow Fight 2 MOD,ROBLOX MOD,Netflix MOD,8 Ball Pool MOD,Brawl Stars MOD,Geometry Dash MOD,The Amazing Spider-Man 2 MOD,Pokemon GO MOD,Fortnite Mobile,Five Nights at Freddy's MOD,TikTok MOD,YouTube Vanced MOD,Five Nights at Freddy's 2 MOD,Google Play Store,The best Android iOS mobile software app download platform,Android game download,Android app download,最好用的Android iOS手机软件app下载平台,兔兔助手,一键Root,安卓游戏下载,安卓应用下载">
+    <meta name="description"
+        content="TutuApp is an app that has plenty of tweaks, hacked, MOD, ++ apps, and games on iPhone and Android. Here to visit our official website to download tweaks, hacked, MOD, ++ apps for free without jailbreaking or root.">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="propeller" content="c3ac30c61c856487144437c86e62231c">
+    <meta name="verify-admitad" content="3b3d3dc134" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>TutuApp - Download for fun(iOS & Android) - Official Website</title>
+    <script>window.downloadMap = { "androidFree": { "url": "https://down-us.tutuapp.com/android_file/009/26/82/40/939db934ecf7c1b9e92dbab58875280d.apk", "version": "4.1.7", "fileSize": "63.16MB", "updateDate": "2022-10-11" }, "iosFreeMac": { "url": "https://down-tutuapp.tutuapp.net/app/macos/Tutuapp_1.0.1.dmg", "version": "1.0.1", "fileSize": "7.58MB", "updateDate": "2022-03-01" }, "iosVip": { "url": "https://www.tutuapp.vip/ios/", "version": "1", "fileSize": "22.88MB", "updateDate": "2022-09-07" } }</script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tutu-nav-wrap">
+        <nav class="tutu-nav">
+            <a href="/pc/"> <img src="/pc/assets/images/tutuapp.svg" class="tutuapp-icon" alt="tutuapp" /></a>
+            <div class="link-group">
+                <div class="link-group-item" style="--right: 70px">
+                    <a href="/pc/download" class="active">Download</a>
+                </div>
+                <div class="link-group-item" style="--right: 60px">
+                    <a href="/pc/support">Support</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="index" v-cloak class="download">
+        <section class="image-text">
+            <h2>Choose your platform</h2>
+            <div class="switch-bar">
+                <div v-for="{ code, text } in platforms" :key="code" class="switch-bar-item"
+                    :class="{ active: option === code }" @click="handleClick(code)">{{ text }}</div>
+            </div>
+            <transition name="fade-transform" mode="out-in">
+                <div v-if="option === 'ios-vip'" key="ios-vip" class="card">
+                    <div class="phone" :class="{ active: showQRcode }">
+                        <img src="/pc/assets/images/download/ios-vip.png" alt="" />
+                        <div class="qrcode-wrap">
+                            <div class="qrcode-wrap-inner">
+                                <img src="/pc/assets/images/download/ios-qrcode.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        <h4>TutuApp for iOS (VIP)</h4>
+                        <p>
+                            Download TutuApp for iOS. TutuApp can let you download unlimited tweaks, ++Apps, MOD and
+                            hacked games without jailbreak.
+                        </p>
+                        <button class="download-button" @mouseenter="showQRcode = true" @mouseleave="showQRcode = false"
+                            @click="handleDownload('iosVip')">
+                            <div>Download<img src="/pc/assets/images/download/qrcode.svg" class="icon" alt="" /></div>
+                        </button>
+                        <small class="first">{{ downloadInfo('iosVip') }}</small>
+                        <small class="second">Installation instructions: Please use Camera to scan the QR code on the
+                            screen and use the Safari browser to install according to the instructions on the web
+                            page.</small>
+                        <a class="link" href="https://www.youtube.com/channel/UC5jmme1BxvXxnKjOLYKhXRQ"
+                            target="_blank">Install Tutorial</a>
+                    </div>
+                </div>
+                <div v-else-if="option === 'ios-free'" key="ios-free" class="card">
+                    <div class="free phone" :class="{ active: showQRcode }">
+                        <img src="/pc/assets/images/download/pc.png" alt="" />
+                    </div>
+                    <div class="text">
+                        <h4>TutuApp for iOS (Free)</h4>
+                        <p>
+                            Download TutuApp for PC. TutuApp can let you download unlimited tweaks, ++Apps, MOD and
+                            hacked games on your iOS devices without jailbreak.
+                        </p>
+                        <button class="download-button" @mouseenter="showQRcode = true" @mouseleave="showQRcode = false"
+                            @click="handleDownload('iosFreeMac')">
+                            <div>Download for Mac</div>
+                        </button>
+                        <small class="first">{{ downloadInfo('iosFreeMac') }}</small>
+                        <small class="second">Installation instructions: Please use Camera to scan the QR code on the
+                            screen and use the Safari browser to install according to the instructions on the web
+                            page.</small>
+                        <a class="link" href="https://www.youtube.com/watch?v=racZsB104Jw" target="_blank">Video
+                            tutorial</a>
+                    </div>
+                </div>
+                <div v-else key="android-free" class="card">
+                    <div class="phone" :class="{ active: showQRcode }">
+                        <img src="/pc/assets/images/download/android-free.png" alt="" />
+                        <div class="qrcode-wrap">
+                            <div class="qrcode-wrap-inner">
+                                <img src="/pc/assets/images/download/android-qrcode.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        <h4>TutuApp for Android (Free)</h4>
+                        <p>
+                            Download TutuApp for Android. TutuApp can let you download unlimited tweaks, ++Apps, MOD and
+                            hacked games without root.
+                        </p>
+                        <button class="download-button" @mouseenter="showQRcode = true" @mouseleave="showQRcode = false"
+                            @click="handleDownload('androidFree')">
+                            <div>Download<img src="/pc/assets/images/download/qrcode.svg" class="icon" alt="" /></div>
+                        </button>
+                        <small class="first">{{ downloadInfo('androidFree') }}</small>
+                        <small class="second">Installation instructions: Please use Camera to scan the QR code on the
+                            screen and follow the instructions on the web page to install.</small>
+                    </div>
+                </div>
+            </transition>
+        </section>
+    </div>
+    <footer class="tutu-footer">
+        <section>
+            <img src="/pc/assets/images/tutuapp.svg" class="tutuapp-icon" alt="" />
+            <p>© [[year]] Tutuapp</p>
+        </section>
+        <section>
+            <h4>Contact us</h4>
+            <p><img src="/pc/assets/images/twitter.svg" class="icon" alt="" />Twitter: @TutuApp_vip</p>
+            <p><img src="/pc/assets/images/message.svg" class="icon icon-message" alt="" />bussiness@tutuapp.vip</p>
+        </section>
+        <section>
+            <!-- <h4><router-link to="/support">Get support</router-link></h4> -->
+        </section>
+    </footer>
+    <script src="/pc/assets/js/vue.min.js"></script>
+    <script data-ad-client="ca-pub-4037099820591017" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="stylesheet" href="/pc/assets/css/index.css">
+    <link rel="stylesheet/less" href="/pc/assets/css/index-page.less">
+    <link rel="stylesheet/less" href="/pc/assets/css/download.less">
+    <script src="/pc/assets/js/less.min.js"></script>
+    <script>
+        new Vue({
+            el: '#index',
+            data() {
+                return {
+                    platforms: [
+                        {
+                            code: 'ios-vip',
+                            text: 'TutuApp for iOS (VIP)'
+                        },
+                        {
+                            code: 'ios-free',
+                            text: 'TutuApp for iOS (Free)'
+                        },
+                        {
+                            code: 'android-free',
+                            text: 'TutuApp for Android (Free)'
+                        }
+                    ],
+                    option: 'ios-vip',
+                    showQRcode: false,
+                    downloadMap: {
+                        iosVip: {},
+                        androidFree: {},
+                        iosFreeMac: {}
+                    }
+                }
+            },
+            methods: {
+                downloadInfo(key) {
+                    let content = ''
+                    let data = this.downloadMap[key]
+                    if (data) {
+                        let { version, updateDate, fileSize } = data
+                        content = `v${version} / ${updateDate} / ${fileSize}`
+                    }
+                    return content
+                },
+                handleDownload(key) {
+                    let data = this.downloadMap[key]
+                    let { url } = data
+                    if (url) {
+                        if (key === 'iosFreeMac') {
+                            location.href = url
+                        } else {
+                            window.open(url)
+                        }
+                    }
+                },
+                handleClick(option) {
+                    this.option = option
+                }
+            },
+            created() {
+                if (window.downloadMap) {
+                    this.downloadMap = window.downloadMap
+                }
+            }
+        })
+    </script>
+    <!-- built files will be auto injected -->
+    <script type="text">
+        <!-- verify-admitad: "3b3d3dc134" -->
+    <!-- verify-admitad: "556a841e00" -->
+    </script>
+    <script type="text/javascript" async>
+            /*
+            ** Google 统计分析脚本
+            */
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        /*
+        ** 当前页的访问统计
+        */
+        ga('create', 'UA-93227825-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Payment - Mobile App</title>
+    <style type="text/css">
+        #app {
+            font-family: PingFangSC-Regular, PingFang SC;
+            width: 100%;
+            font-size: 14px;
+            max-width: 420px;
+            margin: 0 auto;
+            position: relative;
+            height: 100vh;
+        }
+
+        #app #card {
+            height: 300px;
+            background-color: hsl(218, 93%, 11%);
+            position: relative;
+        }
+
+        #app #card .bar {
+            position: absolute;
+            background-color: #3fc8b2;
+            width: 4px;
+            height: 40px;
+            left: 60px;
+            top: -16px;
+            transform: rotate(30deg);
+        }
+
+        #app #card .bar--blue {
+            left: 74px;
+            background-color: #5cacf3;
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .translucent {
+            opacity: .7;
+            color: #ffffff;
+            font-size: 12px;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            margin-bottom: 12px;
+            font-weight: 300;
+        }
+
+        .margin-bottom-40px {
+            margin-bottom: 40px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding-left: 42px;
+            padding-top: 64px;
+            min-height: 100px;
+        }
+
+        .card-name,
+        .card-number,
+        .text-white {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .block {
+            position: absolute;
+            right: 0;
+        }
+
+        .block-green {
+            background-color: #3fc8b2;
+            height: 80px;
+            width: 50px;
+            bottom: 100px;
+        }
+
+        .block-blue {
+            background-color: #5cacf3;
+            height: 80px;
+            width: 80px;
+            bottom: 60px;
+        }
+
+        .glass {
+            border-top: 1px solid #ffffff30;
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            left: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            padding-left: 42px;
+            background-image: linear-gradient(80deg, transparent 0%, transparent, 80%, #F7F7F799 100%);
+        }
+
+        .glass-item:not(:last-child) {
+            margin-right: 60px;
+        }
+
+        .transaction-list {
+            padding: 24px 28px;
+            background-color: #ffffff;
+        }
+
+        .text-light {
+            color: #AAAAAA;
+            font-weight: 300;
+        }
+
+        .text-bold {
+            color: #011435;
+            font-family: PingFangSC-Bold, PingFang SC;
+            font-weight: 900;
+        }
+
+        .sub-title {
+            padding: 12px 0;
+        }
+
+        .button-group {
+            font-size: 0;
+        }
+
+        .button-vertical {
+            width: 60px;
+            border: 1px solid #f4f4f4;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .button-vertical:first-child {
+            margin-right: 14px;
+        }
+
+        .button-icon {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-icon img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .button-text {
+            height: 28px;
+            width: 100%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .button-text-gray {
+            background-color: #f5f7f9;
+            color: #021638;
+        }
+
+        .button-text-green {
+            background-color: #3dcab1;
+            color: #ffffff;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .horizon-line {
+            height: 80px;
+            width: 100%;
+            position: relative;
+        }
+
+        .horizon-line::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            left: 0;
+            top: 50%;
+            transform: translateY(-0.5px);
+            background-color: #f3f2f5;
+        }
+
+        .horizon-line-text {
+            color: #c5c4c8;
+            font-size: 10px;
+            padding: 16px;
+            display: inline-block;
+            background-color: #ffffff;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 2;
+            white-space: nowrap;
+            transform: translate(-50%, -50%);
+        }
+
+        .transaction-list-item {
+            height: 90px;
+            padding: 16px 28px 16px 16px;
+            background-color: #f5f7f9;
+            display: flex;
+            align-items: center;
+        }
+
+        .transaction-list-item:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        .icon-transaction {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            margin-right: 12px;
+        }
+
+        .icon-transaction img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .transaction-income-expenses {
+            color: #04152f;
+            font-weight: 900;
+            font-size: 18px;
+            font-family: PingFangSC-Bold, PingFang SC;
+            flex: 1;
+            text-align: right;
+        }
+
+        .transaction-item-name {
+            color: #04152f;
+            font-weight: 900;
+            font-size: 18px;
+            font-family: PingFangSC-Bold, PingFang SC;
+            margin-bottom: 14px;
+        }
+
+        .transaction-item-date {
+            font-size: 12px;
+        }
+
+        .app-tab {
+            height: 80px;
+            width: 100%;
+            position: sticky;
+            left: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            background-color: #ffffff;
+        }
+
+        .app-tab-item {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .devide-line {
+            height: 14px;
+            width: 0;
+            border-left: 1px solid #e5e4e6;
+            /* background-color: #e5e4e6; */
+        }
+
+        .app-tab-icon {
+            --size: 24px;
+            width: 24px;
+            height: 24px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: var(--size) var(--size);
+        }
+
+        .wave {
+            border-radius: 8px;
+            border: 1.6px solid #9a9ba3;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-tab-icon-wave {
+            --size: 12px;
+            background-image: url(./img/sound-wave.svg);
+        }
+
+        .app-tab-icon-category {
+            background-image: url(./img/category.svg);
+        }
+
+        .app-tab-icon-credit-card {
+            background-image: url(./img/credit-card.svg);
+        }
+
+        .app-tab-icon-user {
+            background-image: url(./img/user.svg);
+        }
+
+        .is-active .app-tab-icon-wave {
+            background-image: url(./img/sound-wave-active.svg);
+        }
+
+        .is-active .wave {
+            border-color: #3ec9ae;
+        }
+
+        .is-active .app-tab-icon-category {
+            background-image: url(./img/category-active.svg);
+        }
+
+        .is-active .app-tab-icon-credit-card {
+            background-image: url(./img/credit-card-active.svg);
+        }
+
+        .is-active .app-tab-icon-user {
+            background-image: url(./img/user-active.svg);
+        }
+
+        .hidden,
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hidden">
+        <img src="./img/sound-wave-active.svg" alt="">
+        <img src="./img/category-active.svg" alt="">
+        <img src="./img/credit-card-active.svg" alt="">
+        <img src="./img/user-active.svg" alt="">
+    </div>
+    <div v-cloak id="app">
+        <div id="card">
+            <div class="bar"></div>
+            <div class="bar bar--blue"></div>
+            <div class="card-body">
+                <div class="translucent">
+                    Card Name
+                </div>
+                <h3 class="card-name margin-bottom-40px">
+                    10am Card
+                </h3>
+                <h4 class="card-number">
+                    **** **** **** ****
+                </h4>
+                <div class="block block-green"></div>
+                <div class="block block-blue"></div>
+                <div class="glass">
+                    <div class="glass-item">
+                        <div class="translucent">
+                            EXP DATE
+                        </div>
+                        <h4 class="text-white">12/25</h4>
+                    </div>
+                    <div class="glass-item">
+                        <div class="translucent">
+                            CVV NUMBER
+                        </div>
+                        <h4 class="text-white">962</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="transaction-list">
+            <div class="flex">
+                <div>
+                    <div class="text-light sub-title">Current value</div>
+                    <h3 class="text-bold">$ 259,000</h3>
+                </div>
+                <div class="button-group">
+                    <div class="button-vertical">
+                        <div class="button-icon">
+                            <img src="./img/plus.svg" alt="">
+                        </div>
+                        <div class="button-text button-text-gray">
+                            Topup
+                        </div>
+                    </div>
+                    <div class="button-vertical">
+                        <div class="button-icon">
+                            <img src="./img/paper-plane.svg" alt="">
+                        </div>
+                        <div class="button-text button-text-green">
+                            Send
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="horizon-line">
+                <div class="horizon-line-text">
+                    Latest Transaction
+                </div>
+            </div>
+            <div class="transaction-list-item" @click="jumpTo('./income.html')">
+                <div class="icon-transaction">
+                    <img src="./img/arrow-down-doc.svg" alt="">
+                </div>
+                <div class="transaction-item-event">
+                    <div class="transaction-item-name">
+                        Savings
+                    </div>
+                    <div class="transaction-item-date text-light">
+                        Today,30 Apr
+                    </div>
+                </div>
+                <div class="transaction-income-expenses">
+                    +$6,200
+                </div>
+            </div>
+            <div class="transaction-list-item">
+                <div class="icon-transaction">
+                    <img src="./img/arrow-up-doc.svg" alt="">
+                </div>
+                <div class="transaction-item-event">
+                    <div class="transaction-item-name">
+                        Figma Pro
+                    </div>
+                    <div class="transaction-item-date text-light">
+                        Wed,29 Apr
+                    </div>
+                </div>
+                <div class="transaction-income-expenses">
+                    -$200
+                </div>
+            </div>
+            <div class="transaction-list-item">
+                <div class="icon-transaction">
+                    <img src="./img/arrow-down-doc.svg" alt="">
+                </div>
+                <div class="transaction-item-event">
+                    <div class="transaction-item-name">
+                        Savings
+                    </div>
+                    <div class="transaction-item-date text-light">
+                        Tur,30 Mar
+                    </div>
+                </div>
+                <div class="transaction-income-expenses">
+                    +$6,200
+                </div>
+            </div>
+        </div>
+        <div class="app-tab">
+            <div class="app-tab-item" :class="{ 'is-active': activeIndex === 0 }" @click="activeIndex = 0">
+                <div class="wave app-tab-icon app-tab-icon-wave"></div>
+            </div>
+            <div class="devide-line"></div>
+            <div class="app-tab-item" :class="{ 'is-active': activeIndex === 1 }" @click="activeIndex = 1">
+                <div class="app-tab-icon app-tab-icon-category"></div>
+            </div>
+            <div class="devide-line"></div>
+            <div class="app-tab-item" :class="{ 'is-active': activeIndex === 2 }" @click="activeIndex = 2">
+                <div class="app-tab-icon app-tab-icon-credit-card"></div>
+            </div>
+            <div class="devide-line"></div>
+            <div class="app-tab-item" :class="{ 'is-active': activeIndex === 3 }" @click="activeIndex = 3">
+                <div class="app-tab-icon app-tab-icon-user"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    activeIndex: 2,
+                }
+            },
+            methods: {
+                jumpTo(url) {
+                    location.href = url
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

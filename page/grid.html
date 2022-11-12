@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer" />
+    <title>grid 布局实现九宫格</title>
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+        }
+
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            position: relative;
+            margin-top: 16px;
+            padding-left: 120px;
+        }
+
+        .content {
+            --grid-gap: 10px;
+            --grid-size: 150px;
+            --height: 224px;
+            --width: 168px;
+            width: calc(var(--grid-size) * 3 + var(--grid-gap) * 2);
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-template-rows: auto;
+            grid-gap: var(--grid-gap);
+            max-height: calc(var(--grid-size) * 3 + var(--grid-gap) * 2);
+            overflow: hidden;
+        }
+
+        .image-item:nth-child(9)::after {
+            content: attr(data-text);
+            position: absolute;
+            font-size: 24px;
+            line-height: 24px;
+            color: #ffffff;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+
+        [data-number="0"] {
+            display: none;
+        }
+
+        [data-number="1"] .image-item {
+            height: var(--height);
+            width: var(--width);
+        }
+
+        [data-number="2"],
+        [data-number="4"] {
+            grid-template-columns: auto auto;
+            grid-template-rows: auto auto;
+            width: calc(var(--grid-size) * 2 + var(--grid-gap) * 1);
+        }
+
+        .image-item {
+            height: var(--grid-size);
+            width: var(--grid-size);
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            vertical-align: top;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-item-video {
+            position: absolute;
+            height: var(--grid-size);
+            width: var(--grid-size);
+        }
+
+        .image-item-video video {
+            position: absolute;
+            z-index: 3;
+            cursor: zoom-in;
+            opacity: 0;
+            transition: opacity 0.3s linear;
+        }
+
+        .image-item-video .verticle {
+            width: var(--grid-size);
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+
+        .image-item-video .horizonal {
+            height: var(--grid-size);
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 1;
+        }
+
+        .image-item__label {
+            width: 31px;
+            height: 16.5px;
+            background: hsla(0, 0%, 100%, .6);
+            border-radius: 8px 0 0 0;
+            text-align: center;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: 9;
+            font-size: 12px;
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-item::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            border-radius: inherit;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            pointer-events: none;
+            left: 0;
+            top: 0;
+            transition: all .2s;
+            z-index: 2;
+        }
+
+        .image-item:hover::before {
+            opacity: 1;
+        }
+
+        .item {
+            margin: 0 auto;
+        }
+
+        .item+.item {
+            margin-top: 24px;
+        }
+
+        .item h3 {
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+    </style>
+    <link rel="stylesheet/less" href="/assets/less/slide.less">
+    <link rel="stylesheet/less" href="/assets/less/index.less">
+    <link rel="stylesheet/less" href="/assets/less/index-page.less">
+    <script src="/assets/js/less.min.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <label for="check" class="bar">
+            <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24" data-view-component="true"
+                class="octicon octicon-three-bars">
+                <path fill-rule="evenodd"
+                    d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z">
+                </path>
+            </svg>
+        </label>
+        <input id="check" type="checkbox">
+        <nav class="header__container">
+            <a href="/" class="header__logo">
+                <svg width="120" class="ser-quick" height="40" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="instagram" x1="0" y1="0" x2="100%" y2="0">
+                            <!--Instagram-->
+                            <stop offset="0%" stop-color="#833ab4" />
+                            <stop offset="50%" stop-color="#fd1d1d" />
+                            <stop offset="100%" stop-color="#fcb045" />
+                        </linearGradient>
+                    </defs>
+                    <g>
+                        <text fill="url(#instagram)" font-style="italic" xml:space="preserve" text-anchor="start"
+                            font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif"
+                            font-size="24" id="svg_1" y="28" x="4" stroke-width="0" stroke="#000"
+                            fill="#000000">Xephyrus</text>
+                    </g>
+                </svg>
+            </a>
+            <div class="header__nav">
+                <a href="/" class="header__link">
+                    首页
+                </a>
+                <a href="/pc" class="header__link">
+                    PC
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="header__placeholder"></div>
+    <main id="main" class="container">
+        <div v-for="i in 12" :key="i" class="item">
+            <h3>宫格图片数: {{ i }}</h3>
+            <div :data-number="i" class="content">
+                <div v-for="n in i" class="image-item" :data-index="n"
+                    :data-text="n === 9 && i > 9 ? '+' + (i - 9) : ''">
+                    <img :src="`https://bestgirlsexy.com/wp-content/uploads/2020/09/Beautyleg-No.1969-Joanna-${n}.jpg`"
+                        alt="">
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <h3>宫格图片数: 9</h3>
+            <div :data-number="imageVideoList.length" class="content">
+                <div v-for="item in imageVideoList" :key="item.poster" class="image-item">
+                    <div class="image-item-video">
+                        <video :src="item.videoPath" :poster="item.poster" muted="muted" autoplay @canplay="handleLoad"></video>
+                    </div>
+                    <div class="image-item__label">Live</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../assets/js/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#main',
+            data() {
+                return {
+                    imageVideoList: [
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F001jdTRSgx07VOiqA7Is0f0f0100ikO10k01.mov",
+                            "poster": "https://wx1.sinaimg.cn/orj360/001tqDw3gy1h1xjv6fc8dj60u0140h3l02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F002gpd7Bgx07VOiqYad20f0f0100k9Pj0k01.mov",
+                            "poster": "https://wx1.sinaimg.cn/orj360/001tqDw3gy1h1xjvb7q1dj60u0140tp602.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F003uNcJbgx07VOirdtVJ0f0f0100lX9J0k01.mov",
+                            "poster": "https://wx3.sinaimg.cn/orj360/001tqDw3gy1h1xjv8mcthj60u0140trn02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F001eMxN6gx07VOirA6RF0f0f0100jVKq0k01.mov",
+                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3gy1h1xjva5oj1j61400u0dwq02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F001YZ0Ragx07VOiqmggw0f0f0100mF5A0k01.mov",
+                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3gy1h1xjv7ivtvj60u0140k8z02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000JuwJbgx07VOirWIUo0f0f0100hqou0k01.mov",
+                            "poster": "https://wx2.sinaimg.cn/orj360/001tqDw3gy1h1xjvc4xzkj61400u0k4s02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F003fhKktgx07VOis7YEU0f0f0100ht9O0k01.mov",
+                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3gy1h1xjvcy1ndj60u0140guq02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000bzuoBgx07VOisqD5m0f0f0100h8ML0k01.mov",
+                            "poster": "https://wx1.sinaimg.cn/orj360/001tqDw3gy1h1xjve5wgwj61400u0h0302.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000omwV4gx07VOisLtsr0f0f0100gWHU0k01.mov",
+                            "poster": "https://wx3.sinaimg.cn/orj360/001tqDw3gy1h1xjvfl4wvj60u0140k7t02.jpg"
+                        }
+                    ]
+                }
+            },methods: {
+                handleLoad(event) {
+                    let video = event.target
+                    if (video) {
+                        const { videoWidth, videoHeight } = video
+                        video.classList.add(videoWidth > videoHeight ? 'horizonal' : 'verticle')
+                        video.dataset.load = true
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

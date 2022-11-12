@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .text-light {
+            color: #AAAAAA;
+            font-weight: 300;
+        }
+
+        #app {
+            width: 100%;
+            font-size: 14px;
+            position: relative;
+            background-color: #ffffff;
+            font-family: PingFangSC-Regular, PingFang SC;
+            max-width: 420px;
+            margin: 0 auto;
+            position: relative;
+            height: 100vh;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .text-bold-white {
+            color: #ffffff;
+            font-family: PingFangSC-Bold, PingFang SC;
+            font-weight: 900;
+        }
+
+        .nav {
+            display: flex;
+            height: 80px;
+            align-items: center;
+            padding: 16px 30px;
+            border-bottom: 1px solid #f2f2f2;
+            position: sticky;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+
+        .nav-title {
+            flex: 1;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 900;
+            color: #1d2b44;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transform: translateX(-12px);
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .dropdown {
+            text-align: right;
+            font-size: 12px;
+        }
+
+        .drop {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            clip-path: polygon(50% 75%, 0 25%, 100% 25%);
+            background-color: #222222;
+        }
+
+        .width-80px {
+            width: 80px;
+        }
+
+        .content {
+            padding: 28px;
+        }
+
+        .count {
+            font-size: 32px;
+            padding: 8px 0;
+        }
+
+        .add-wrapper {
+            width: 100%;
+            height: 90px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .add-wrapper span {
+            position: absolute;
+            display: block;
+        }
+
+        .add-wrapper span:nth-child(1) {
+            width: 100%;
+            height: 2px;
+            top: 0;
+            background-image: linear-gradient(to right,
+                    transparent 0%,
+                    transparent 50%,
+                    #e7e7e7 50%,
+                    #e7e7e7 100%);
+            background-size: 14px 2px;
+            background-position-x: -6px;
+            background-repeat: repeat-x;
+        }
+
+        .add-wrapper span:nth-child(2) {
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background-image: linear-gradient(to bottom,
+                    transparent 0%,
+                    transparent 50%,
+                    #e7e7e7 50%,
+                    #e7e7e7 100%);
+            background-size: 2px 14px;
+            background-position-y: -7px;
+            background-repeat: repeat-y;
+        }
+
+        .add-wrapper span:nth-child(3) {
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-image: linear-gradient(to right,
+                    transparent 0%,
+                    transparent 50%,
+                    #e7e7e7 50%,
+                    #e7e7e7 100%);
+            background-size: 14px 2px;
+            background-position-x: -6px;
+            background-repeat: repeat-x;
+        }
+
+        .add-wrapper span:nth-child(4) {
+            width: 2px;
+            height: 100%;
+            background-image: linear-gradient(to bottom,
+                    transparent 0%,
+                    transparent 50%,
+                    #e7e7e7 50%,
+                    #e7e7e7 100%);
+            background-size: 2px 14px;
+            background-position-y: -7px;
+            background-repeat: repeat-y;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 24px 36px;
+        }
+
+        .margin-bottom-20px {
+            margin-bottom: 20px;
+            line-height: 20px;
+        }
+
+        .pie {
+            width: 24px;
+            height: 24px;
+            margin-right: 36px;
+        }
+
+        .transaction-item-event {
+            flex: 1;
+        }
+
+        .transaction-item-name {
+            color: #04152f;
+            font-weight: 900;
+            font-size: 18px;
+            font-family: PingFangSC-Bold, PingFang SC;
+            margin-bottom: 6px;
+        }
+
+        .transaction-item-date {
+            font-size: 12px;
+        }
+
+        .plus-green {
+            width: 16px;
+            height: 16px;
+        }
+
+        .income-count {
+            width: 80px;
+            height: 20px;
+            color: #ffffff;
+            text-align: center;
+            background-color: #3dcab1;
+            display: inline-block;
+        }
+
+        .bar-chart {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            margin-bottom: 20px;
+            justify-content: space-between;
+        }
+
+        .bar-chart-item {
+            height: 100%;
+            width: 40px;
+        }
+
+        .bar-inner {
+            width: 40px;
+            height: 300px;
+            display: table-cell;
+            vertical-align: bottom;
+        }
+
+        .label-text {
+            color: #b6b5bc;
+            font-size: 12px;
+            text-align: center;
+            font-weight: 300;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .bar-body {
+            --bg-color: #e6e8ea;
+            --color-text: #051b3f;
+            width: 100%;
+            height: var(--height);
+            background-color: var(--bg-color);
+            position: relative;
+        }
+
+        .bar-ratio {
+            font-size: 10px;
+            text-align: center;
+            width: inherit;
+            height: 40px;
+            position: absolute;
+            bottom: 0;
+            color: var(--color-text);
+            line-height: 40px;
+        }
+
+        .active {
+            --bg-color: #021638;
+            --color-text: #ffffff;
+        }
+
+        .glass {
+            border-top: 1px solid #ffffff30;
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            left: 0;
+            bottom: 40px;
+            background-image: linear-gradient(30deg, transparent 0%, transparent, 60%, #FFFFFF99 100%);
+            z-index: 2;
+        }
+
+        .block,
+        .card-block {
+            position: absolute;
+            right: 0;
+        }
+
+        .block-green {
+            background-color: #3fc8b2;
+            height: 16px;
+            width: 16px;
+            bottom: 86px;
+        }
+
+        .block-blue {
+            background-color: #5cacf3;
+            height: 18px;
+            width: 24px;
+            bottom: 68px;
+        }
+
+        .card {
+            width: 100%;
+            height: 198px;
+            background-image: linear-gradient(30deg, #1f4a67 0%, #164463 50%, #031638 100%);
+            padding: 24px;
+            position: relative;
+        }
+
+        .translucent {
+            opacity: .7;
+            color: #ffffff;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            margin: 6px 0;
+            font-size: 12px;
+            font-weight: 300;
+        }
+
+        .percent {
+            height: 70px;
+            width: 100%;
+            padding: 20px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background-image: linear-gradient(30deg, transparent 0%, transparent, 80%, #FFFFFF30 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .percent-bar {
+            height: 2px;
+            width: 100%;
+            border-radius: 4px;
+            background-image: var(--background);
+        }
+
+        .percent-slider {
+            width: 50px;
+            height: 30px;
+            background-color: #ffffff;
+            font-size: 10px;
+            color: #051b3f;
+            text-align: center;
+            line-height: 30px;
+            position: absolute;
+            left: var(--left);
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .card-block-green {
+            background-color: #3fc8b2;
+            height: 25px;
+            width: 35px;
+            bottom: 120px;
+        }
+
+        .card-block-blue {
+            background-color: #5cacf3;
+            height: 50px;
+            width: 60px;
+            bottom: 70px;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div v-cloak id="app">
+        <div class="nav">
+            <div class="width-80px" @click="goBack">
+                <div class="back-button">
+                    <img class="icon" src="./img/arrow-left.svg" alt="">
+                </div>
+            </div>
+            <div class="nav-title">
+                Income
+            </div>
+            <div class="dropdown width-80px">
+                This week <i class="drop"></i>
+            </div>
+        </div>
+        <div class="content">
+            <div class="count">$2,500.00</div>
+            <div class="margin-bottom-20px">
+                <p class="income-count">
+                    + $ 1,920
+                </p>
+                / last week
+            </div>
+            <div class="bar-chart">
+                <div v-for="item in dataList" :key="item.label" class="bar-chart-item">
+                    <div class="bar-inner">
+                        <div class="bar-body" :class="{ 'active': activeLabel === item.label }"
+                            :style="getBarStyle(item)">
+                            <template v-if="activeLabel === item.label">
+                                <div class="block block-green"></div>
+                                <div class="block block-blue"></div>
+                                <div class="glass"></div>
+                            </template>
+                            <div class="bar-ratio">{{ item.ratio }}%</div>
+                        </div>
+                        <div class="label-text">{{ item.label }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="add-wrapper">
+                <span></span><span></span><span></span><span></span>
+                <div class="flex">
+                    <img class="pie" src="./img/pie-chart.svg" alt="">
+                    <div class="transaction-item-event">
+                        <div class="transaction-item-name">
+                            Savings
+                        </div>
+                        <div class="transaction-item-date text-light">
+                            Today,30 Apr
+                        </div>
+                    </div>
+                    <img class="plus-green" src="./img/plus-green.svg" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="text-bold-white">$ 6,500</h3>
+                <div class="translucent">Left to pay of $ 2,400</div>
+                <div class="card-block card-block-green"></div>
+                <div class="card-block card-block-blue"></div>
+                <div class="percent">
+                    <div class="percent-bar" :style="{ '--background': getBackground(), '--left': percentage + '%' }">
+                        <div class="percent-slider">{{ percentage }}%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    scale: 14,
+                    percentage: 32,
+                    activeLabel: 'Tue',
+                    dataList: [{
+                        label: 'Sun',
+                        ratio: 8,
+                    }, {
+                        label: 'Mon',
+                        ratio: 12,
+                    }, {
+                        label: 'Tue',
+                        ratio: 16,
+                    }, {
+                        label: 'Wed',
+                        ratio: 9,
+                    }, {
+                        label: 'Thur',
+                        ratio: 13,
+                    }, {
+                        label: 'Fri',
+                        ratio: 11,
+                    }, {
+                        label: 'Sat',
+                        ratio: 13,
+                    }, ]
+                }
+            },
+            methods: {
+                getBarStyle(item) {
+                    return {
+                        '--height': this.scale * item.ratio + 'px'
+                    }
+                },
+                getBackground() {
+                    return `linear-gradient(to right, #ffffff 0%, #ffffff ${this.percentage}%, #ffffff70 ${this.percentage}%, #ffffff50 100%)`
+                },
+                goBack() {
+                    history.go(-1)
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

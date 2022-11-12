@@ -1,0 +1,402 @@
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes expand {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+body {
+  background-color: #f6f6f6;
+  --slide-width: 960px;
+  --slide-height: 540px;
+}
+
+#app {
+  width: 1000px;
+  margin: 0 auto;
+  margin-top: 16px;
+}
+
+::-webkit-scrollbar {
+  /* 滚动条宽 */
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  /* 滚动条 拖动条 */
+  background-color: #0003;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #0005;
+  }
+}
+
+::-webkit-scrollbar-track {
+  /* 滚动条背景槽 */
+  background-color: transparent;
+  // border-radius: 10px;
+}
+
+.header {
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 1px rgb(0 0 0 / 25%);
+  transition: background-color 0.3s ease-in-out;
+  background-color: #ffffff;
+
+  &__placeholder {
+    height: 70px;
+    width: 100%;
+  }
+
+  &__container {
+    display: flex;
+    padding: 10px 0;
+    height: 70px;
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    left: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.2s linear;
+  }
+
+  &__nav {
+    width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #222222;
+    padding: 0 20px;
+
+    &:hover {
+      font-weight: 700;
+    }
+  }
+}
+
+.active-link {
+  font-weight: 700;
+  color: #1e80ff;
+}
+
+.main {
+  max-width: 1000px;
+  min-height: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 16px auto;
+  color: #333333;
+
+  &__container {
+    width: 68%;
+    background-color: #ffffff;
+  }
+}
+
+.aside {
+  width: 32%;
+  padding-left: 20px;
+
+  > div + div {
+    margin-top: 16px;
+  }
+}
+
+a {
+  color: #333333;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 20px 16px;
+  border-radius: 4px;
+  box-shadow: 0 0 2px 0 rgb(98 124 153 / 10%);
+  font-size: 16px;
+
+  h3 {
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 12px;
+    padding-left: 12px;
+  }
+
+  li {
+    padding: 12px 16px;
+    line-height: 1.5;
+    position: relative;
+
+    &::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      background-color: #495057;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.footer {
+  padding: 30px 16px;
+  width: 100%;
+  background-color: #ffffff;
+
+  &__container {
+    width: 1000px;
+    margin: 0 auto;
+  }
+
+  &__text {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  &__branding {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    width: 130px;
+    height: 30px;
+    margin-top: -4px;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 20px;
+    line-height: 30px;
+    padding: 8px 0;
+    color: #222222;
+
+    &__text {
+      opacity: .7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &__area {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+  }
+}
+
+.devider {
+  display: inline-block;
+  height: 1.5em;
+  margin: 0 12px;
+  vertical-align: middle;
+  width: 1px;
+  background-color: #999999;
+}
+
+.bar {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: none;
+  fill: #f6f6f6;
+
+  & + input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.sponsor {
+  &__add {
+    width: 14px;
+    height: 14px;
+    margin: 0 8px;
+  }
+
+  &__logo {
+    width: 120px;
+    height: 15px;
+    fill: #48a4ab;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .header__logo {
+    left: 16px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .header__logo {
+    opacity: 0;
+  }
+
+  .github-corner {
+    --github-size: 70px;
+  }
+
+  .view-port {
+    --ratio: 1.5;
+  }
+}
+
+@media screen and (max-width: 1032px) {
+  .main__container,
+  .aside,
+  .header__nav,
+  .header__container,
+  #app {
+    width: 100%;
+  }
+
+  .footer {
+    padding: 16px;
+    &__container {
+      width: 100%;
+    }
+  }
+
+  .main {
+    margin: 16px;
+  }
+
+  .header__logo {
+    display: none;
+  }
+
+  .aside {
+    padding: 0;
+    margin-top: 16px;
+  }
+
+  .view-port {
+    --ratio: 1.8;
+  }
+}
+
+@media (max-width: 900px) {
+  .view-port {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .github-corner {
+    --github-size: 60px;
+    &:hover .octo-arm {
+      animation: none;
+    }
+    .octo-arm {
+      animation: octocat-wave 560ms ease-in-out;
+    }
+  }
+
+  .view-port {
+    --ratio: 3;
+  }
+
+  .header {
+    background-color: #495057;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    padding: 16px;
+
+    &__placeholder {
+      height: 60px;
+    }
+
+    &__container {
+      display: none;
+      height: 0;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    &__nav {
+      display: block;
+      padding: 0;
+    }
+  }
+
+  .bar {
+    display: block;
+  }
+
+  #check:checked + .header__container {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    display: block;
+    height: 100%;
+    background-color: #ffffff;
+    animation: expand 0.3s ease;
+    z-index: 10;
+
+    .header__link {
+      font-size: 16px;
+      display: block;
+      box-sizing: border-box;
+      padding: 8px 16px;
+      line-height: 20px;
+      margin: 0 16px;
+
+      & + .header__link {
+        border-top: 1px solid #f1f1f1;
+      }
+    }
+  }
+}

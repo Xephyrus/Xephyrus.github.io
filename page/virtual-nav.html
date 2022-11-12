@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>虚拟导航 & 黏性布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Helvetica Neue, Helvetica, Tahoma, Arial, PingFang SC, Microsoft YaHei, Hiragino Sans GB, Heiti SC, SimHei, SimSun, sans-serif;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        nav {
+            height: 50px;
+            width: 100%;
+            position: fixed;
+        }
+
+        ul,
+        dl {
+            list-style: none;
+        }
+
+
+        img {
+            display: block;
+        }
+
+        dt {
+            height: 52px;
+            font-size: 14px;
+            color: #333;
+            padding: 16px 0;
+            box-sizing: border-box;
+            top: 0;
+            z-index: 1;
+            background: #fff;
+            line-height: 20px;
+            box-shadow: 0 -1px #fff;
+        }
+
+        dd {
+            height: 120px;
+            display: flex;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .container aside {
+            min-height: 100vh;
+            background: #f7f8fa;
+            font-size: 12px;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        .container aside ul li {
+            box-sizing: border-box;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .active {
+            background: #fff;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .container aside ul li .icon {
+            margin-right: 4px;
+        }
+
+        .container main {
+            flex: 1;
+            height: 100vh;
+            box-sizing: border-box;
+            padding: 0 8px;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+
+        .cover-wrap {
+            display: inline-block;
+            position: relative;
+            vertical-align: top;
+            width: 100px;
+            height: 100px;
+            background-color: #f7f4ef;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .new::after {
+            content: '新品';
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 12px;
+            background: #40c5af;
+            padding: 0 2px;
+            color: #fff;
+            line-height: 16px;
+            border-radius: 4px;
+        }
+
+        .cover {
+            width: auto;
+            height: 100px;
+        }
+
+        .inline-block {
+            display: inline-block;
+            flex: 1;
+            position: relative;
+        }
+
+        .payment {
+            position: absolute;
+            left: 0;
+            bottom: 20px;
+        }
+
+        .payment-price {
+            color: #f54d3d;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .payment-price::before {
+            content: '¥';
+            font-size: 12px;
+        }
+
+        ::-webkit-scrollbar {
+            /* 滚动条宽 */
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            /* 滚动条 拖动条 */
+            background-color: #0003;
+            border-radius: 10px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #0005;
+        }
+
+        ::-webkit-scrollbar-track {
+            /* 滚动条背景槽 */
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <nav></nav>
+    <div id="app">
+        <div class="container">
+            <aside>
+                <ul>
+                    <li>全场九块九</li>
+                    <li v-for="{ id, html } in tabList" :key="id" v-html="html" :class="{ 'active': tabId === id }"
+                        @click="handleSelect(id)">
+                    </li>
+                </ul>
+            </aside>
+            <main ref="container" @scroll="handleScroll">
+                <dl ref="list">
+                    <div v-for="(item, i) in tabList" :key="i">
+                        <dt :data-id="i" v-text="purify(item.html)" :style="{
+                            position: sticky ? 'sticky' : 'static'
+                        }"></dt>
+                        <dd v-for="{ title, cover } in productMap.get(i)" :key="title + i">
+                            <div class="cover-wrap" :class="{ new: i === 1 }">
+                                <img class="cover" v-lazyload="cover" alt="" />
+                            </div>
+                            <div class="inline-block">
+                                <h4>{{ title }}</h4>
+                                <div class="payment">
+                                    <div class="inline-block payment-price">9.9</div>
+                                </div>
+                            </div>
+                        </dd>
+                    </div>
+                </dl>
+            </main>
+        </div>
+    </div>
+    <script src="../assets/js/vue.min.js"></script>
+    <script>
+        Vue.directive("lazyload", {
+            // 指令的定义
+            bind: function (el, binding) {
+                let lazyImageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry, index) => {
+                        let lazyImage = entry.target;
+                        // 相交率，默认是相对于浏览器视窗
+                        if (entry.intersectionRatio > 0) {
+                            lazyImage.src = binding.value;
+                            // 当前图片加载完之后需要去掉监听
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    })
+                })
+                lazyImageObserver.observe(el);
+            },
+        });
+    </script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    tabList: [{
+                        "id": 0,
+                        "html": "<div class=\"icon icon-bought\"></div>买过"
+                    },
+                    {
+                        "id": 1,
+                        "html": "推荐"
+                    },
+                    {
+                        "id": 2,
+                        "html": "冰淇淋与茶系列",
+                    },
+                    {
+                        "id": 3,
+                        "html": "奶茶&特饮"
+                    },
+                    {
+                        "id": 4,
+                        "html": "奶盖茶&原叶茶"
+                    },
+                    {
+                        "id": 5,
+                        "html": "真果茶限定"
+                    }
+                    ],
+                    productMap: new Map([
+                        [0, [{
+                            "cover": "https://www.mxbc.com/media/upload/product/4324234.jpg",
+                            "title": "奥利奥味雪王大圣代"
+                        }]],
+                        [1, [{
+                            title: '白桃乌龙',
+                            cover: 'https://www.hsay.com/uploads/allimg/20210322/2-210322135J2b7.png'
+                        }, {
+                            title: '多肉草莓',
+                            cover: 'https://www.hsay.com/uploads/allimg/20210322/2-210322135Q92b.png'
+                        }, {
+                            title: '多肉葡萄',
+                            cover: 'https://www.hsay.com/uploads/allimg/20210322/2-21032213592VL.png'
+                        }, {
+                            title: '桃桃蜜柚',
+                            cover: 'https://www.hsay.com/uploads/allimg/20210322/2-21032213595Q52.png'
+                        }, {
+                            title: '杨枝甘露',
+                            cover: 'https://www.hsay.com/uploads/allimg/20210322/2-210322140020112.png'
+                        },]],
+                        [2, [{
+                            "cover": "https://www.mxbc.com/media/upload/product/4324234.jpg",
+                            "title": "黑糖珍珠大圣代"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_17.jpg",
+                            "title": "奥利奥味雪王大圣代"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_20.jpg",
+                            "title": "草莓味雪王大圣代"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_27.jpg",
+                            "title": "蓝莓味雪王大圣代"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_19.jpg",
+                            "title": "冰淇淋红茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_35.jpg",
+                            "title": "吃土摇摇奶昔"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_29.jpg",
+                            "title": "蓝莓摇摇奶昔"
+                        }
+                        ]],
+                        [
+                            3, [{
+                                "cover": "https://www.mxbc.com/media/upload/product/file_2.jpg",
+                                "title": "三拼霸霸奶茶"
+                            },
+                            {
+                                "cover": "https://www.mxbc.com/media/upload/product/84/file_8.jpg",
+                                "title": "双拼奶茶"
+                            },
+                            {
+                                "cover": "https://www.mxbc.com/media/upload/product/84/file.jpg",
+                                "title": "红豆奶茶"
+                            },
+                            {
+                                "cover": "https://www.mxbc.com/media/upload/product/84/file_18.jpg",
+                                "title": "黑糖珍珠奶茶"
+                            },
+                            {
+                                "cover": "https://www.mxbc.com/media/upload/product/84/file_1.jpg",
+                                "title": "烤奶珍珠奶茶"
+                            },
+                            {
+                                "cover": "https://www.mxbc.com/media/upload/product/84/file_4.jpg",
+                                "title": "马来西亚白咖啡"
+                            },
+                            {
+                                "cover": "https://www.mxbc.com/media/upload/product/84/file_10.jpg",
+                                "title": "四季春珍珠奶茶"
+                            },
+                            {
+                                "cover": "https://www.mxbc.com/media/upload/product/84/file_11.jpg",
+                                "title": "珍珠奶茶"
+                            }
+                            ]
+                        ],
+                        [4, [{
+                            "cover": "https://www.mxbc.com/media/upload/product/file_1.jpg",
+                            "title": "芝士奶盖红茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_19.jpg",
+                            "title": "红茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_9.jpg",
+                            "title": "四季春茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_3.jpg",
+                            "title": "绿茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_13.jpg",
+                            "title": "芝士奶盖绿茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_14.jpg",
+                            "title": "芝士奶盖四季春"
+                        }
+                        ]],
+                        [5, [{
+                            "cover": "https://www.mxbc.com/media/upload/product/file.jpg",
+                            "title": "满杯百香果"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_15.jpg",
+                            "title": "棒打鲜橙"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_16.jpg",
+                            "title": "冰鲜柠檬水"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_28.jpg",
+                            "title": "蓝莓果粒茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_7.jpg",
+                            "title": "柠檬红茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/84/file_2.jpg",
+                            "title": "柠檬芦荟茶"
+                        },
+                        {
+                            "cover": "https://www.mxbc.com/media/upload/product/file_12.jpg",
+                            "title": "杨枝甘露"
+                        }
+                        ]]
+                    ]),
+                    tabId: 0,
+                    domList: [],
+                    offsets: [],
+                    scroll: true,
+                    sticky: true
+                };
+            },
+            methods: {
+                throttle(fn, delay, atleast) {
+                    /**函数节流方法
+                    @param Function fn 延时调用函数
+                    @param Number dalay 延迟多长时间
+                    @param Number atleast 至少多长时间触发一次
+                    @return Function 延迟执行的方法
+                    */
+                    let timer = null;
+                    let previous = null;
+                    return function () {
+                        var now = +new Date();
+                        if (!previous) previous = now;
+                        if (atleast && now - previous > atleast) {
+                            fn();
+                            // 重置上一次开始时间为本次结束时间
+                            previous = now;
+                            clearTimeout(timer);
+                        } else {
+                            clearTimeout(timer);
+                            timer = setTimeout(function () {
+                                fn();
+                                previous = null;
+                            }, delay);
+                        }
+                    }
+                },
+                handleScroll() {
+                    this.scroll && this.throttle(this.scrollFunc, 200, 200)()
+                },
+                purify(html) {
+                    const dom = document.createElement('div')
+                    dom.innerHTML = html
+                    return dom.innerText
+                },
+                scrollFunc() {
+                    const {
+                        container,
+                        list
+                    } = this.$refs
+                    let {
+                        scrollTop
+                    } = container
+                    if (!this.sticky) this.sticky = true
+                    for (let i = 0; i < this.offsets.length; i++) {
+                        let prev = this.offsets[i]
+                        let next = this.offsets[i + 1] || list.clientHeight
+                        if (scrollTop >= prev && scrollTop < next) {
+                            this.tabId = i
+                            return
+                        }
+                    }
+                },
+                // 如果是点击的方法滚动就要先禁止调用滚动事件, 然后异步恢复, 否则当最后一项不足一屏高度时会出现bug
+                handleSelect(id) {
+                    this.scroll = this.sticky = false
+                    this.tabId = id
+                    setTimeout(() => {
+                        this.domList[id].scrollIntoView()
+                        this.scroll = true
+                    }, 10)
+                }
+            },
+            mounted() {
+                this.domList = [...document.querySelectorAll('dt[data-id]')]
+                this.offsets = this.domList.map(item => item.offsetTop)
+            }
+        })
+    </script>
+    <!-- <link rel="stylesheet" href="./css/icon.css"> -->
+</body>
+
+</html>
