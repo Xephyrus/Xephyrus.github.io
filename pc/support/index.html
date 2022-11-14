@@ -53,9 +53,9 @@
                         Please use Safari.
                     </div>
                     <div v-for="(item, index) in imageList" :key="item.id" class="image-item-wrap">
-                        <img v-lazyload="item.icon" alt="" class="number-icon" />
+                        <img :src="item.icon" alt="" class="number-icon" />
                         <div :class="{ top: index === 0, fifth: index === 4 }" class="image-item">
-                            <img v-lazyload="item.url" alt="" />
+                            <img :src="item.url" alt="" />
                             <div v-if="domList[index]" class="tip" v-html="domList[index]['dom']"
                                 :style="domList[index]['style']"></div>
                         </div>
@@ -67,8 +67,8 @@
                     </div>
                     <div v-for="(item, index) in imageList1" :key="item.id" class="image-item-wrap">
                         <div class="image-item">
-                            <img v-lazyload="item.icon" alt="" class="number-icon" />
-                            <img v-lazyload="item.url" alt="" />
+                            <img :src="item.icon" alt="" class="number-icon" />
+                            <img :src="item.url" alt="" />
                             <div v-if="domList1[index]" class="tip" v-html="domList1[index]['dom']"
                                 :style="domList1[index]['style']"></div>
                         </div>
@@ -78,8 +78,8 @@
                     <div class="android-header"></div>
                     <div v-for="(item, index) in imageList2" :key="item.id" class="image-item-wrap">
                         <div :class="{ first: index === 0 }" class="image-item">
-                            <img v-lazyload="item.icon" alt="" class="number-icon" />
-                            <img v-lazyload="item.url" alt="" />
+                            <img :src="item.icon" alt="" class="number-icon" />
+                            <img :src="item.url" alt="" />
                             <div v-if="domList2[index]" class="tip" v-html="domList2[index]['dom']"
                                 :style="domList2[index]['style']"></div>
                         </div>
@@ -110,7 +110,7 @@
     <footer class="tutu-footer">
         <section>
             <img src="/pc/assets/images/tutuapp.svg" class="tutuapp-icon" alt="" />
-            <p>© [[year]] Tutuapp</p>
+            <p>© 2022 Tutuapp</p>
         </section>
         <section>
             <h4>Contact us</h4>
