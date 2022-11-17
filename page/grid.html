@@ -116,12 +116,12 @@
             bottom: 0;
             z-index: 9;
             font-size: 12px;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.3s linear;
         }
 
-        [data-load="true"] + .image-item__label {
-            opacity: 1;
+        [data-play="true"]+.image-item__label {
+            opacity: 0;
         }
 
         .image-item img {
@@ -171,6 +171,7 @@
         @media (max-width: 600px) {
             .container {
                 padding: 3vw;
+                padding-bottom: 6vw;
             }
 
             .content {
@@ -180,9 +181,12 @@
                 --width: 36vw;
                 --border-radius: 2vw;
             }
+
+            .item h3 {
+                font-size: 15px;
+            }
         }
     </style>
-    <link rel="stylesheet/less" href="/assets/less/slide.less">
     <link rel="stylesheet/less" href="/assets/less/index.less">
     <link rel="stylesheet/less" href="/assets/less/index-page.less">
     <script src="/assets/js/less.min.js"></script>
@@ -222,9 +226,6 @@
                 <a href="/" class="header__link">
                     首页
                 </a>
-                <a href="/pc" class="header__link">
-                    PC
-                </a>
             </div>
         </nav>
     </header>
@@ -241,17 +242,30 @@
             </div>
         </div>
         <div class="item">
-            <h3>宫格图片数: 9</h3>
+            <h3>简单实现微博动态相册图片</h3>
+            <h3>宫格图片数: {{ imageVideoList.length }}</h3>
             <div :data-number="imageVideoList.length" class="content">
-                <div v-for="item in imageVideoList" :key="item.poster" class="image-item">
+                <div v-for="(item, index) in imageVideoList" :key="item.poster" class="image-item">
                     <div class="image-item-video">
-                        <video :src="item.videoPath" :poster="item.poster" muted="muted" autoplay
-                            @canplay="handleLoad"></video>
+                        <video :src="item.videoPath" :data-index="index" :poster="item.poster" muted="muted"
+                            data-play="false" :autoplay="false" @canplay="handleLoad"></video>
                         <div class="image-item__label">Live</div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- <div class="item">
+            <h3>宫格图片数: 6</h3>
+            <div :data-number="imageVideoList.length" class="content">
+                <div v-for="(item, index) in imageVideoList" :key="item.poster" class="image-item">
+                    <div class="image-item-video">
+                        <video :src="item.videoPath" :data-index="index" :poster="item.poster" muted="muted"
+                            data-play="false" :autoplay="false" @canplay="handleLoad"></video>
+                        <div class="image-item__label">Live</div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </main>
     <script src="../assets/js/vue.min.js"></script>
     <script>
@@ -296,7 +310,35 @@
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000omwV4gx07VOisLtsr0f0f0100gWHU0k01.mov",
                             "poster": "https://wx3.sinaimg.cn/orj360/001tqDw3gy1h1xjvfl4wvj60u0140k7t02.jpg"
                         }
-                    ]
+                    ], imageVideoList1: [
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000FQ9W8gx07Ul7Uy3ni0f0f0100dbKo0k01.mov",
+                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3ly1h03gwvwddrj60u00u0jz702.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F003RWnJtgx07Ul7UP0ru0f0f0100bgmD0k01.mov",
+                            "poster": "https://wx2.sinaimg.cn/orj360/001tqDw3ly1h03gwxhpduj60n70mbwjl02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000Kwkvegx07Ul7V9tvO0f0f0100cSnh0k01.mov",
+                            "poster": "https://wx1.sinaimg.cn/orj360/001tqDw3ly1h03gwt3gnij60u00u047k02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F001fVialgx07Ul7VrBGf0f0f0100d41I0k01.mov",
+                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3ly1h03gwwu8gzj60u00u0zsx02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F004CgSnqgx07Ul7VQbJu0f0f0100cSJo0k01.mov",
+                            "poster": "https://wx3.sinaimg.cn/orj360/001tqDw3ly1h03gwtrnhjj60u00u0ahx02.jpg"
+                        },
+                        {
+                            "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F003Jpm5Egx07Ul7WfMJW0f0f0100cSuf0k01.mov",
+                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3ly1h03gwv2qldj60u00u0dod02.jpg"
+                        }
+                    ],
+                    playList: [],
+                    playIndex: 0,
+                    now: 0
                 }
             }, methods: {
                 handleLoad(event) {
@@ -305,6 +347,32 @@
                         const { videoWidth, videoHeight } = video
                         video.classList.add(videoWidth > videoHeight ? 'horizonal' : 'verticle')
                         video.dataset.load = true
+                        if (this.playList.length < this.imageVideoList.length) {
+                            this.playList.push(video)
+                        }
+                    }
+                    if (this.playList.length === this.imageVideoList.length) {
+                        // 按index重新排序, 因为视频加载完成的先后顺序并不一定与数组顺序一致
+                        this.playList.sort((a, b) => +a.dataset.index - (+b.dataset.index))
+                        this.handlePlay()
+                    }
+                },
+                handlePlay() {
+                    this.now = Date.now()
+                    let video = this.playList[this.playIndex]
+                    video.dataset.play = true
+                    video.play()
+                    video.onended = () => {
+                        video.dataset.play = false
+                        // console.log(this.playIndex)
+                        console.log(Date.now() - this.now)
+                        this.now = Date.now()
+                        if (this.playIndex < this.playList.length - 1) {
+                            this.playIndex++
+                        } else {
+                            this.playIndex = 0
+                        }
+                        this.handlePlay()
                     }
                 }
             },
