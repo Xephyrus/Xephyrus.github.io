@@ -6,14 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR code</title>
-    <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
-    <meta name="referrer" content="no-referrer" />
 </head>
 
 <body>
     <img style="width: 400px; height: 400px;margin: 0 auto;"
         src="http://17304.sit-cnstarr.51zxtx.com/pay/code?code=weixin%3A%2F%2Fwxpay%2Fbizpayurl%3Fpr%3DgJj6XSqzz"
         alt="">
+    <script>
+        script = document.createElement('script');
+        script.src = 'http://17304.sit-cnstarr.51zxtx.com/pay/code?code=weixin%3A%2F%2Fwxpay%2Fbizpayurl%3Fpr%3DgJj6XSqzz';
+        script.type = 'image/png'
+        document.body.insertBefore(script, document.body.firstChild);
+    </script>
 </body>
 
 </html>
