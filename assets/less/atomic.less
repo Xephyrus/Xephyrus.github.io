@@ -1,0 +1,104 @@
+:root {
+  --color-main: #333333;
+  --color-red: #f44545;
+  --color-white: #ffffff;
+  --color-blue: #0c33f3;
+  --color-purple: #c70cf1;
+  --color-gold: #ae842e;
+  --color-yellow: #fec42d;
+  --color-green: #0ada39;
+}
+@fontSizeList: 10, 11, 12, 13, 14, 15, 16, 18, 20, 24, 32;
+@intervals: 10, 12, 16, 20, 24, 30, 40, 50, 100;
+@colorName: normal, red, white, blue, purple, gold, yellow, green;
+@colorValue: var(--color-main), var(--color-red), var(--color-white),
+  var(--color-blue), var(--color-purple), var(--color-gold), var(--color-yellow), var(--color-green);
+
+// when条件判断
+.each-font-size(@index) when (@index <= length(@fontSizeList)) {
+  // 获取名称
+  @name: extract(@fontSizeList, @index);
+  // 拼接.font-size-名称
+  .font-size-@{name} {
+    // extract从数组从取值
+    font-size: extract(@fontSizeList, @index) * 1px;
+  }
+  .each-font-size(@index + 1);
+}
+
+.each-font-size(1);
+
+.each-padding-margin(@index) when (@index <= length(@intervals)) {
+  @name: extract(@intervals, @index);
+  .padding-left-@{name} {
+    padding-left: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-right-@{name} {
+    padding-right: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-top-@{name} {
+    padding-top: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-bottom-@{name} {
+    padding-bottom: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-@{name} {
+    padding: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-left-@{name} {
+    margin-left: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-right-@{name} {
+    margin-right: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-top-@{name} {
+    margin-top: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-bottom-@{name} {
+    margin-bottom: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-@{name} {
+    margin: extract(@intervals, @index) * 1px;
+  }
+  .each-padding-margin(@index + 1);
+}
+
+.each-padding-margin(1);
+
+.text-color(@index) when (@index <= length(@colorName)) {
+  @name: extract(@colorName, @index);
+
+  .text-@{name} {
+    color: extract(@colorValue, @index);
+  }
+
+  .text-color(@index + 1);
+}
+
+.text-color(1);
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../../base64/desk_01.jpg");
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,99 @@
+.font-Homenaje {
+  font-family: Homenaje-Regular, Homenaje;
+}
+
+.font-Khand {
+  font-family: Khand-Regular, Khand;
+
+  &-300 {
+    font-family: Khand-Light, Khand;
+    font-weight: 300;
+  }
+
+  &-500 {
+    font-family: Khand-Medium, Khand;
+    font-weight: 500;
+  }
+
+  &-600 {
+    font-family: Khand-SemiBold, Khand;
+    font-weight: 600;
+  }
+}
+
+@font-face {
+  font-family: "07TetsubinGothic";
+  // 路径为绝对路径
+  src: url("/assets/fonts/TetsubinGothic.otf");
+}
+
+.font-TetsubinGothic {
+  font-family: "07TetsubinGothic";
+}
+
+@fontSizeList: 10, 11, 12, 13, 14, 15, 16, 18, 20, 24, 28, 32, 70;
+@intervals: 10, 20, 30, 40, 60;
+
+// when条件判断
+.each-font-size(@index) when (@index <= length(@fontSizeList)) {
+  // 获取名称
+  @name: extract(@fontSizeList, @index);
+  // 拼接.font-size-名称
+  .font-size-@{name} {
+    // extract从数组从取值
+    font-size: extract(@fontSizeList, @index) * 1px;
+  }
+  .each-font-size(@index + 1);
+}
+
+.each-font-size(1);
+
+.each-padding-margin(@index) when (@index <= length(@intervals)) {
+  @name: extract(@intervals, @index);
+  .padding-left-@{name} {
+    padding-left: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-right-@{name} {
+    padding-right: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-top-@{name} {
+    padding-top: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-bottom-@{name} {
+    padding-bottom: extract(@intervals, @index) * 1px;
+  }
+
+  .padding-@{name} {
+    padding: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-left-@{name} {
+    margin-left: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-right-@{name} {
+    margin-right: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-top-@{name} {
+    margin-top: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-bottom-@{name} {
+    margin-bottom: extract(@intervals, @index) * 1px;
+  }
+
+  .margin-@{name} {
+    margin: extract(@intervals, @index) * 1px;
+  }
+  .each-padding-margin(@index + 1);
+}
+
+.margin-right-8 {
+  margin-right: 8px;
+}
+
+.each-padding-margin(1);
