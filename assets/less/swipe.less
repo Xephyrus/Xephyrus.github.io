@@ -4,6 +4,7 @@
 }
 
 .swiper-viewport {
+  padding: 0 65px;
   width: 100%;
   height: 480px;
   position: relative;
@@ -58,12 +59,22 @@
   column-gap: 50px;
   row-gap: 20px;
   width: 100%;
+
+  a {
+    display: block;
+    flex: 1;
+  }
 }
 
 .swipe-grid-item {
-  flex: 1;
   box-sizing: border-box;
   display: flex;
+
+  .flex-1 {
+    width: 220px;
+    overflow: hidden;
+  }
+
   .size-90 {
     width: 90px;
     height: 90px;
@@ -83,4 +94,28 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media (max-width: 1400px) {
+  .swiper-viewport {
+    padding: 0;
+  }
+}
+
+@media (max-width: 1240px) {
+  .swiper-viewport {
+    height: 640px;
+  }
+  .swipe-grid {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .swiper-viewport {
+    height: 1120px;
+  }
+  .swipe-grid {
+    grid-template-columns: auto;
+  }
 }
