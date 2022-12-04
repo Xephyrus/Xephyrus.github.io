@@ -1,7 +1,9 @@
 :root {
     --tutu-white: #ffffff;
+    --tutu-bg-header: var(--tutu-white);
     --tutu-bg-blue: #2e45ab;
     --tutu-bg-gray: #F0F0F9;
+    --tutu-bg-white: #ffffff;
     --tutu-blue: #2a5ec3;
     --tutu-green: #488D2C;
     --tutu-red: #F6567E;
@@ -11,4 +13,18 @@
     --color-link-active: #a2abbf;
     --color-primary: #0084f0;
     --icon-arrow-down: url('/assets/images/svg/arrow-down-black.svg');
+}
+
+[data-theme="dark"] {
+    --tutu-bg-header: #161617;
+    --tutu-color-primary: #ffffff;
+    --tutu-bg-white: #101010;
+    --tutu-bg-footer: #161617;
+    --tutu-bg-gray: #171A1D;
+    --tutu-bg-card: #BDC8D6;
+    --tutu-search-color: #ffffff;
+}
+
+.theme-button {
+    background: none;
 }
