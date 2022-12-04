@@ -32,22 +32,65 @@ body {
     min-height: 770px;
 
     .container {
-      width: 540px;
+      max-width: 540px;
     }
   }
 
   .section-white {
     background-color: var(--tutu-white);
     padding-top: 60px;
+
+    .main {
+      padding: 0 100px;
+
+      &.padding-bottom-90 {
+        padding-bottom: 90px;
+      }
+    }
+
+    .flex-between {
+      .image-wrapper {
+        margin-right: 20px;
+      }
+      img {
+        width: 455px;
+        height: auto;
+        object-fit: contain;
+      }
+
+      ul {
+        max-width: 670px;
+        overflow: hidden;
+      }
+
+      .font-size-28 {
+        line-height: 42px;
+        margin-bottom: 13px;
+      }
+
+      .font-Khand-300 {
+        line-height: 25px;
+      }
+    }
+
+    .sponsors {
+      height: 210px;
+      position: relative;
+    }
   }
 
   .section-gray {
     background-color: var(--tutu-bg-gray);
-    padding: 90px 0 100px 0;
+    padding: 60px 0 100px 0;
 
     .main {
       padding-left: 127px;
       display: flex;
+      padding-top: 30px;
+
+      .font-size-70 {
+        line-height: 80px;
+      }
     }
 
     .grid {
@@ -61,8 +104,6 @@ body {
       margin-right: 60px;
 
       .size-72 {
-        width: 72px;
-        height: 72px;
         background: linear-gradient(
           127deg,
           rgba(155, 195, 250, 0.37) 0%,
@@ -77,25 +118,81 @@ body {
         line-height: 42px;
       }
     }
+
+    .discount {
+      height: 300px;
+      border-radius: 50px;
+      padding-top: 28px;
+      width: 100%;
+      background-image: url("https://att.fengimg.com/2022/11/17/12212519hto3a3lvlakpu1.jpeg");
+      background-size: cover;
+      background-position: center;
+      padding-left: 125px;
+
+      > .font-size-18 {
+        margin-bottom: 3px;
+      }
+    }
+
+    .feedback {
+      padding-left: 100px;
+      padding-right: 100px;
+      padding-bottom: 40px;
+      display: block;
+
+      .font-size-24 {
+        line-height: 24px;
+      }
+
+      .font-size-60 {
+        line-height: 80px;
+        margin-bottom: 47px;
+      }
+    }
+
+    .pagination-wrapper {
+      position: relative;
+    }
+
+    .pagination {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 60px;
+      height: 20px;
+      background-color: #48a4ab;
+    }
+
+    .comment {
+      padding: 40px;
+      padding-bottom: 100px;
+      transform: translateY(4px);
+      overflow-y: hidden;
+
+      ul {
+        display: flex;
+      }
+
+      &-card {
+        width: 360px;
+        height: 220px;
+        background: #ffffff;
+        box-shadow: 0px 35px 45px 0px rgba(10, 31, 68, 0.1);
+        border-radius: 10px;
+        padding: 20px 18px;
+        flex-shrink: 0;
+
+        & + .comment-card {
+          margin-left: 40px;
+        }
+      }
+    }
   }
 
   h1 {
     font-size: 70px;
     line-height: 70px;
-    width: 540px;
   }
-}
-
-.round {
-  border-radius: 50%;
-}
-
-.block {
-  display: block;
-}
-
-.flex-1 {
-  flex: 1;
 }
 
 .theme-button {
@@ -104,18 +201,6 @@ body {
 
 .margin-top-14 {
   margin-top: 14px;
-}
-
-.text-white {
-  color: var(--tutu-white);
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-left {
-  text-align: left;
 }
 
 ::-webkit-scrollbar {
@@ -139,11 +224,6 @@ body {
   /* 滚动条背景槽 */
   background-color: transparent;
   // border-radius: 10px;
-}
-
-.size-40 {
-  width: 40px;
-  height: 40px;
 }
 
 .header {
@@ -374,52 +454,65 @@ a {
 }
 
 .footer {
-  padding: 30px 16px;
-  width: 100%;
-  background-color: #ffffff;
-
-  &__container {
-    width: 1440px;
-    margin: 0 auto;
-  }
-
-  &__text {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.5;
-  }
-
-  &__branding {
-    display: flex;
-    align-items: center;
-  }
+  background-color: rgba(189, 200, 214, 0.3);
+  padding-top: 40px;
+  padding-bottom: 20px;
 
   &__logo {
-    width: 130px;
-    height: 30px;
-    margin-top: -4px;
-  }
-
-  &__link {
     display: inline-flex;
     align-items: center;
-    font-size: 20px;
-    line-height: 30px;
-    padding: 8px 0;
-    color: #222222;
+    transition: opacity 0.2s linear;
+    margin-right: 24px;
 
-    &__text {
-      opacity: 0.7;
+    .tutu-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background-color: var(--tutu-color-primary);
+    }
+
+    .font-Homenaje {
+      width: 100px;
+      text-align: center;
+    }
+  }
+
+  &__section {
+    max-width: 220px;
+
+    .font-size-18 {
+      margin-bottom: 8px;
+    }
+
+    .font-Khand-500 {
+      cursor: pointer;
+      opacity: 0.3;
+      transition: opacity 0.2s ease-in;
+
+      & + .font-Khand-500 {
+        margin-top: 4px;
+      }
 
       &:hover {
         opacity: 1;
       }
     }
+  }
 
-    &__area {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
+  .margin-right-80 {
+    margin-right: 80px;
+  }
+
+  .main {
+    padding: 0 100px;
+    display: flex;
+    position: relative;
+
+    > .font-size-12 {
+      position: absolute;
+      top: 15px;
+      right: 50px;
+      cursor: pointer;
     }
   }
 }
@@ -456,16 +549,6 @@ a {
 }
 
 @media screen and (max-width: 1200px) {
-  .github-corner {
-    --github-size: 70px;
-  }
-
-  .view-port {
-    --ratio: 1.5;
-  }
-}
-
-@media screen and (max-width: 1032px) {
   .main__container,
   .aside,
   .header__nav,
@@ -483,6 +566,7 @@ a {
 
   .main {
     margin: 16px;
+    width: 100%;
   }
 
   .header__logo {
@@ -652,18 +736,4 @@ a {
       }
     }
   }
-}
-
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ellipsis-l2 {
-  overflow: hidden; //多出的隐藏
-  text-overflow: ellipsis; //多出部分用...代替
-  display: -webkit-box; //定义为盒子模型显示
-  -webkit-line-clamp: 2; //用来限制在一个块元素显示的文本的行数
-  -webkit-box-orient: vertical; //从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
 }

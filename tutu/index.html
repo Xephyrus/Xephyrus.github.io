@@ -14,6 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://unpkg.com/swiper@8.3.0/swiper-bundle.min.css">
     <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/automic.css">
     <link rel="stylesheet/less" href="/assets/less/theme.less">
     <link rel="stylesheet/less" href="/assets/less/font.less">
     <link rel="stylesheet/less" href="/assets/less/swipe.less">
@@ -158,6 +159,19 @@
             flex: 1;
             text-align: center;
         }
+
+        .purchase-button {
+            background: var(--tutu-red);
+            color: var(--tutu-white);
+            width: 200px;
+            height: 50px;
+            border-radius: 30px;
+            font-size: 24px;
+            font-family: Khand-Medium, Khand;
+            font-weight: 500;
+            padding: 4px 16px;
+            cursor: pointer;
+        }
     </style>
     <script src="/assets/js/vue.js"></script>
     <script src="https://unpkg.com/swiper@8.3.0/swiper-bundle.min.js"></script>
@@ -177,7 +191,7 @@
             </path>
         </symbol>
         <symbol id="icon-android" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-            p-id="3634" width="20" height="20">
+            p-id="3634">
             <path
                 d="M192.128 240.298667a42.666667 42.666667 0 0 1 58.24 15.872l71.552 125.226666A467.712 467.712 0 0 1 511.957333 341.333333c61.056 0 119.381333 11.648 172.885334 32.853334l67.413333-118.016a42.666667 42.666667 0 0 1 74.112 42.325333l-65.322667 114.304a469.333333 469.333333 0 0 1 217.941334 350.976A42.666667 42.666667 0 0 1 936.533333 810.666667H87.466667a42.666667 42.666667 0 0 1-42.453334-46.890667 469.12 469.12 0 0 1 202.410667-340.821333L176.256 298.496a42.666667 42.666667 0 0 1 15.872-58.197333zM320 661.333333a42.666667 42.666667 0 1 0 0-85.333333 42.666667 42.666667 0 0 0 0 85.333333z m426.666667-42.666666a42.666667 42.666667 0 1 0-85.333334 0 42.666667 42.666667 0 0 0 85.333334 0z"
                 fill="var(--tutu-color-primary)"></path>
@@ -186,6 +200,18 @@
             <path
                 d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
             </path>
+        </symbol>
+        <symbol id="icon-twitter" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="2338">
+            <path
+                d="M868.78260513 350.93851167c-4.19752479 316.58112364-206.64378348 533.42289687-508.84923077 547.04005471-124.62575954 5.70639316-214.91280228-34.551102-293.48715213-84.46745527 92.10982108 14.70125585 206.32520569-22.11723305 267.41045242-74.40833277-90.28704274-8.78247749-143.74276011-54.7393641-168.7552-128.69725356 26.08953618 4.51026781 53.57474644 3.31414245 78.36079771-1.93480569-81.47305755-27.27282508-139.65259487-77.62795213-142.6586621-183.14254588 22.8629151 10.40920798 46.6967339 20.19409687 78.36079772 22.12306782-60.97321937-34.68180056-106.05956011-161.46291966-54.42078633-245.29788718 90.49359316 99.18854928 199.34683533 180.12947692 378.08647293 191.07898346-44.87512251-191.83050029 209.33127293-295.85489687 315.7222473-166.92541994 44.97431338-8.70079088 81.58158405-25.7639567 116.79551453-44.33599088-14.49353846 44.54837607-42.40585299 75.68030997-76.43065983 100.58539031 37.3506188-5.04239772 70.41152364-14.16912593 98.65525243-28.12469971-17.51944388 36.39255157-55.82929687 69.02751909-88.78984388 96.50689458z"
+                fill="var(--tutu-color-primary)" p-id="2339"></path>
+        </symbol>
+        <symbol id="icon-youtube" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="9590">
+            <path
+                d="M941.3 296.1c-10.3-38.6-40.7-69-79.2-79.3C792.2 198 512 198 512 198s-280.2 0-350.1 18.7C123.3 227 93 257.4 82.7 296 64 366 64 512 64 512s0 146 18.7 215.9c10.3 38.6 40.7 69 79.2 79.3C231.8 826 512 826 512 826s280.2 0 350.1-18.8c38.6-10.3 68.9-40.7 79.2-79.3C960 658 960 512 960 512s0-146-18.7-215.9zM423 646V378l232 133-232 135z"
+                fill="var(--tutu-color-primary)" p-id="9591"></path>
         </symbol>
     </svg>
     <div v-cloak id="app">
@@ -347,7 +373,7 @@
                         <div class="swiper-wrapper">
                             <div v-for="i in 3" :key="i" class="swiper-slide">
                                 <div class="swipe-grid">
-                                    <a v-for="app in appList" :key="app.appId" :href="`/app/${app.appId}`">
+                                    <a v-for="app in appList" :key="app.appId" :href="`#app${app.appId}`">
                                         <div class="swipe-grid-item">
                                             <div class="size-90 margin-right-20"></div>
                                             <div class="flex-1">
@@ -385,7 +411,179 @@
                     allowfullscreen></iframe>
             </div>
         </div>
+        <section class="section-white">
+            <div class="main">
+                <div class="font-size-70 font-Khand-500 text-center margin-bottom-60">The most popular TutuApp</div>
+                <div class="flex-between">
+                    <div class="image-wrapper">
+                        <img src="/assets/images/weixin-qrcode.jpg" alt="">
+                    </div>
+                    <ul>
+                        <li v-for="i in 4" :key="i" class="margin-bottom-20">
+                            <div class="font-size-28 font-Khand-600">
+                                Download and Install Apps for Free
+                            </div>
+                            <div class="font-Khand-300">
+                                Tutuapp offers massive content of Tweaked Apps, Mods, Hacked Games, and other unofficial
+                                apps for iOS and Android users. You won't find these apps or games anywhere else. Panda
+                                Helper provides Free Version and VIP Version. VIP Version will enjoy more exclusive
+                                services and apps.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sponsors"></div>
+        </section>
+        <div class="section-gray">
+            <div class="main feedback">
+                <div class="discount margin-bottom-60">
+                    <div class="font-size-24 font-Khand-500 margin-bottom-10">
+                        Limited Time Offer
+                    </div>
+                    <div class="font-size-18 font-Khand-300 text-white">
+                        Price increases in 08:32:39
+                    </div>
+                    <div class="font-size-60 font-Khand-500">50% off</div>
+                    <button type="button" class="purchase-button">
+                        Get Now
+                    </button>
+                </div>
+                <div class="font-size-70 font-Khand-500 text-center margin-bottom-60">User Comments</div>
+                <div class="pagination-wrapper">
+                    <div class="pagination"></div>
+                    <div class="comment">
+                        <ul>
+                            <li v-for="i in 9" :key="i" class="comment-card">
+                                <div class="flex margin-bottom-20">
+                                    <img src="/assets/images/weibo/001.jpeg" class="size-50 round margin-right-10"
+                                        alt="" />
+                                    <div class="font-size-18 font-Khand-600 ellipsis flex-1">Phạm Quốc Hùng</div>
+                                </div>
+                                <div class="font-Khand-300 ellipsis-l3 margin-bottom-20">
+                                    Loved using it to download apps and helped me as I figured out how to get more
+                                    in-game
+                                    resources. I'm VIP and to be honest it rarely gets revoked, but I redownloaded and
+                                    it
+                                    works well again. I would like to recommend to more friends to use it!
+                                </div>
+                                <div class="flex-between padding-right-10">
+                                    <el-rate disabled :value="5"></el-rate>
+                                    <svg-icon icon-name="twitter" size="16"></svg-icon>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-white">
+            <div class="main padding-bottom-90">
+                <div class="font-size-70 font-Khand-500 text-center margin-bottom-60">
+                    How to Useing and Troubleshooting
+                </div>
+                <dl>
+                    <template v-for="i in 5">
+                        <dt :key="i" class="font-size-28 font-Khand-500 q-a margin-bottom-10">Download and Install Apps
+                            for Free</dt>
+                        <dd class="font-Khand-300 margin-bottom-18">
+                            Tutuapp offers massive content of Tweaked Apps, Mods, Hacked Games, and other unofficial
+                            apps for iOS and Android users. You won't find these apps or games anywhere else. Panda
+                            Helper provides Free Version and VIP Version. VIP Version will enjoy more exclusive services
+                            and apps.
+                        </dd>
+                    </template>
+                </dl>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="main">
+                <div class="footer__section margin-right-80">
+                    <a href="/" class="footer__logo margin-bottom-20">
+                        <div class="margin-right-8 tutu-logo"></div>
+                        <div class="font-Homenaje font-size-32">
+                            Tutuapp
+                        </div>
+                    </a>
+                    <div class="font-size-12 font-Khand-300 margin-bottom-10">
+                        The Most Popular 3rd-Party App Store on iOS and Android without Jailbreak or Apple ID
+                    </div>
+                    <div class="font-Khand-300 margin-bottom-10">
+                        © TutuApp Inc 2022
+                    </div>
+                    <div class="flex">
+                        <a href="https://twitter.com/TutuApp_vip" class="margin-right-10" aria-label="twitter account"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg-icon icon-name="twitter" size="24"></svg-icon>
+                        </a>
+                        <a href="https://www.youtube.com/@tutuappvip8632" aria-label="youtube account" target="_blank"
+                            rel="noopener noreferrer">
+                            <svg-icon icon-name="youtube" size="24"></svg-icon>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__section padding-top-10 margin-right-20">
+                    <div class="font-size-18 font-Khand-600">
+                        About US
+                    </div>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            Privacy
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            Terms & Conditions
+                        </div>
+                    </a>
+                </div>
+                <div class="footer__section padding-top-10 margin-right-20">
+                    <div class="font-size-18 font-Khand-600">
+                        Download
+                    </div>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            iOS (iPhone/ipad/AppleTV)
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            Android
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            iOS Desktop (Mac/Windows)
+                        </div>
+                    </a>
+                </div>
+                <div class="footer__section padding-top-10">
+                    <div class="font-size-18 font-Khand-600">
+                        Support
+                    </div>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            FAQ
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            Tutorials
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="font-Khand-500">
+                            Email: bussiness@tutuapp.vip
+                        </div>
+                    </a>
+                </div>
+                <div class="font-size-12 font-Khand">
+                    English
+                </div>
+            </div>
+        </footer>
     </div>
+
     <script src="/assets/js/less.min.js"></script>
     <script>
         Vue.component('svgIcon', {

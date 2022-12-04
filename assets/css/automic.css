@@ -1,0 +1,83 @@
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis-l2 {
+  overflow: hidden; /*多出的隐藏*/
+  text-overflow: ellipsis; /*多出部分用...代替*/
+  display: -webkit-box; /*定义为盒子模型显示*/
+  -webkit-line-clamp: 2; /*用来限制在一个块元素显示的文本的行数*/
+  -webkit-box-orient: vertical; /*从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）*/
+}
+
+.ellipsis-l3 {
+  overflow: hidden; /*多出的隐藏*/
+  text-overflow: ellipsis; /*多出部分用...代替*/
+  display: -webkit-box; /*定义为盒子模型显示*/
+  -webkit-line-clamp: 3; /*用来限制在一个块元素显示的文本的行数*/
+  -webkit-box-orient: vertical; /*从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）*/
+}
+
+.size-40 {
+  width: 40px;
+  height: 40px;
+}
+
+.size-50 {
+  width: 50px;
+  height: 50px;
+}
+
+.size-72 {
+  width: 72px;
+  height: 72px;
+}
+
+.text-white {
+  color: var(--tutu-white);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.round {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.block {
+  display: block;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.q-a {
+    padding-left: 24px;
+    background-image: url('/assets/images/svg/Q&A.svg');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 2px center;
+}
