@@ -172,6 +172,37 @@
             cursor: pointer;
         }
 
+        .breadcrumb {
+            display: inline-flex;
+            line-height: 28px;
+        }
+
+        .breadcrumb li:not(:last-child) {
+            padding-right: 24px;
+            font-family: Khand-SemiBold, Khand;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            box-sizing: border-box;
+            content: "";
+            border: 2px solid transparent;
+            border-left-color: var(--tutu-color-primary);
+            border-bottom-color: var(--tutu-color-primary);
+            transform: translateY(-50%) rotate(-135deg);
+        }
+
+        .breadcrumb li:last-child {
+            font-family: Khand-Light, Khand;
+            font-weight: 300;
+        }
+
         [v-cloak] {
             display: none;
         }
@@ -381,6 +412,14 @@
         <div class="header__placeholder"></div>
         <section class="section-blue text-white">
             <div class="main">
+                <ul class="breadcrumb font-size-18">
+                    <li>
+                        <a href="/">TutuApp </a>
+                    </li>
+                    <li>
+                        <a href="/desctop">iOS Desktop </a>
+                    </li>
+                </ul>
                 <div class="container">
                     <h1 class="font-TetsubinGothic margin-bottom-10">
                         TutuApp <br>
@@ -639,6 +678,19 @@
                     return `#icon-${this.iconName}`;
                 }
             }
+        })
+
+        Vue.component('breadcrumb', {
+            data: {
+                breadRoute: [{
+                    label: 'TutuApp',
+                    path: '/'
+                }, {
+                    label: 'iOS Desktop',
+                    path: '/desctop'
+                }]
+            },
+            template: `<div></div>`,
         })
 
         Vue.component('downloadButton', {
