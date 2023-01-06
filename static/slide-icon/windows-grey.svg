@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="windows-灰-a" x1="94.694%" x2="20.151%" y1="-11.683%" y2="100%">
+      <stop offset="0%" stop-color="#F8FCFF"/>
+      <stop offset="100%" stop-color="#B8DBF8"/>
+    </linearGradient>
+  </defs>
+  <path fill="#D3E2F8" stroke="url(#windows-灰-a)" d="M30.0629213,55.6666667 L30,34 L58,34.1293532 L58,60 L30.0629213,55.6666667 Z M30,9.34594595 L58,5 L58,29 L30,29 L30,9.34594595 Z M6,34 L26,34.0636364 L26,55 L6,51.7545455 L6,34 L6,34 Z M6,29 L6,13.2626263 L26,10 L26,29 L6,29 Z"/>
+</svg>

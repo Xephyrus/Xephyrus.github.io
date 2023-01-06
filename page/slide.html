@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-size: 16px;
+            font-family: -apple-system-font, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        a {
+            color: #333333;
+            text-decoration: none;
+        }
+
+        :root {
+            --animation-duration: 5000ms;
+            --animation-delay: 1000ms;
+        }
+
+        .home__bg {
+            background-color: #ffb387;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: opacity 1.2s cubic-bezier(.19, 1, .22, 1);
+            pointer-events: none;
+            text-align: right;
+            z-index: 1;
+        }
+
+        #app {
+            position: relative;
+            z-index: 2;
+        }
+
+        .home__bg__inner {
+            width: 80%;
+            height: auto;
+            position: absolute;
+            top: -15rem;
+            right: -60rem;
+        }
+
+        nav {
+            padding: 20px;
+        }
+
+        .nav-list {
+            display: flex;
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-list-item {
+            font-size: 16px;
+            display: flex;
+            flex: none;
+        }
+
+        .link {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            color: #000;
+            font-weight: 500;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .banner {
+            padding: 60px 0;
+            margin-left: 10px;
+        }
+
+        .switch-bar {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .switch-bar-item {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            height: 30px;
+            cursor: pointer;
+            position: relative;
+            transition: all .2s;
+        }
+
+        .switch-bar-item::before {
+            position: absolute;
+            content: '';
+            display: inline-block;
+            width: 100%;
+            height: 0;
+        }
+
+        .devider {
+            display: inline-block;
+            width: 0px;
+            height: 20px;
+            margin: 0 15px;
+            border-left: 1px solid #fff;
+        }
+
+        .switch-bar-item .desc {
+            line-height: 30px;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 7px;
+            opacity: .7;
+            transition: all .2s;
+        }
+
+        .switch-bar-item:hover .desc,
+        .switch-bar-item.active .desc {
+            opacity: 1;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .view-port {
+            width: 56vw;
+            max-width: 1200px;
+            padding: 60px 0;
+            margin: 0 auto;
+        }
+
+        .slide-list {
+            height: 72vh;
+            max-height: 720px;
+            min-height: 400px;
+            width: 100%;
+            position: relative;
+        }
+
+        .slide-list-item {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            box-sizing: border-box;
+            padding: 84px 80px;
+            position: absolute;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+                -webkit-transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), -webkit-filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            -webkit-transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+                -webkit-transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), -webkit-filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateX(calc(-8vw * var(--index-from-selected))) scale(var(--scale));
+            opacity: var(--opacity);
+            filter: blur(var(--blur));
+            z-index: var(--z-index);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-list-item .desc {
+            color: #888;
+            font-size: 12px;
+            line-height: 15px;
+            margin-bottom: 10px;
+        }
+
+        .slide-list-item .system {
+            color: #000;
+            line-height: 23px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* .slide-list-item:hover, */
+        /* .is-selected {
+            background: linear-gradient(27deg, #f0383c, #ffb57c);
+            cursor: pointer;
+        } */
+
+        .slide-list-item[data-platform="windows"] {
+            background: linear-gradient(to right, #1fb3fe, #0e46b7);
+        }
+
+        .slide-list-item[data-platform="mac"] {
+            background: radial-gradient(#a3a3a3, #c0c0c0, #ffffff);
+        }
+
+        .slide-list-item[data-platform="linux"] {
+            background: radial-gradient(#a3a3a3 0%, #212121 100%);
+            /* background: #202020; */
+        }
+
+        .slide-list-item[data-platform="android"] {
+            background: #acc939;
+        }
+
+        .slide-list-item[data-platform="ios"] {
+            background: radial-gradient(#8e8e8e, #0d0d0d);
+        }
+
+        .slide-list-item:hover .slide-icon[data-platform="windows"],
+        .is-selected .slide-icon[data-platform="windows"] {
+            background: url("/static/slide-icon/windows-white.svg") no-repeat 100% 100%;
+        }
+
+        .slide-list-item:hover .slide-icon[data-platform="mac"],
+        .is-selected .slide-icon[data-platform="mac"] {
+            background: url("/static/slide-icon/apple-white.svg") no-repeat 100% 100%;
+        }
+
+        .slide-list-item:hover .slide-icon[data-platform="linux"],
+        .is-selected .slide-icon[data-platform="linux"] {
+            background: url("/static/slide-icon/linux-white.svg") no-repeat 100% 100%;
+        }
+
+        .slide-list-item:hover .slide-icon[data-platform="android"],
+        .is-selected .slide-icon[data-platform="android"] {
+            background: url("/static/slide-icon/android-white.svg") no-repeat 100% 100%;
+        }
+
+        .slide-list-item:hover .slide-icon[data-platform="ios"],
+        .is-selected .slide-icon[data-platform="ios"] {
+            background: url("/static/slide-icon/ios-white.svg") no-repeat 100% 100%;
+        }
+
+        .slide-list-item:hover .system,
+        .slide-list-item:hover .desc,
+        .is-selected .system,
+        .is-selected.slide-list-item .desc {
+            color: #ffffff;
+        }
+
+        .download-icon {
+            width: 19px;
+            height: 19px;
+            display: inline-block;
+            margin-left: 6px;
+            background: url(/static/slide-icon/download-icon.svg) no-repeat 100% 100%;
+        }
+
+        .is-selected .download-icon {
+            background: url(/static/slide-icon/download-hover-icon.svg) no-repeat 100% 100%;
+        }
+
+        .is-selected .download {
+            color: #ffffff;
+        }
+
+        .download-button {
+            height: 60px;
+            display: block;
+            width: 180px;
+            margin: 0 auto;
+        }
+
+        .download {
+            display: flex;
+            text-align: center;
+            line-height: 20px;
+            font-size: 16px;
+            color: #222;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .wps-office {
+            height: 58px;
+            width: auto;
+            margin-bottom: 20px;
+        }
+
+        .wps-text {
+            font-size: 28px;
+            font-family: "Microsoft Yahei", 微软雅黑, sans-serif, MicrosoftYaHei;
+            color: rgb(255, 255, 255);
+            line-height: 38px;
+            letter-spacing: 6px;
+            margin-bottom: 40px;
+        }
+
+        .hidden {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        @keyframes changePagerSelectorWidth {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: var(--width);
+            }
+        }
+
+        .progress-bar,
+        .progress-bar-inner {
+            --width: 100%;
+            position: absolute;
+            left: 0;
+            top: 120%;
+            width: var(--width);
+            height: .1875rem;
+            border-radius: 6px;
+            background-color: rgba(33, 33, 35, .25)
+        }
+
+        .progress-bar {
+            animation: fadeIn 250ms ease-out forwards, changePagerSelectorWidth .8s cubic-bezier(.19, 1, .22, 1) forwards
+        }
+
+        .progress-bar-inner {
+            background-color: #212123;
+            width: 10%;
+            z-index: 1;
+            animation: changePagerSelectorWidth var(--animation-duration) linear forwards
+        }
+    </style>
+    <link rel="stylesheet" href="/static/slide.css">
+    <script src="/assets/js/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 这里先加载图片, 防止icon切换时抖动 -->
+    <img src="/static/images/windows-hover.svg" alt="" class="hidden">
+    <img src="/static/images/mac-hover.svg" alt="" class="hidden">
+    <img src="/static/images/linux-hover.svg" alt="" class="hidden">
+    <img src="/static/images/android-hover.svg" alt="" class="hidden">
+    <img src="/static/images/ios-hover.svg" alt="" class="hidden">
+    <div class="home__bg" data-home-target="heroBg">
+        <img src="https://sketch-cdn.imgix.net/assets/pages/home/illustrations/diamond-shape-coral@2x.png?ixlib=rb-4.0.1&dpr=0.5&q=95&fm=png&auto=format&s=bf4d67e7f5ba831a3da735938527939f"
+            alt="" class="home__bg__inner home__bg__inner--hero" data-home-target="heroBgInner"
+            style="--hero-bg-top:0px;">
+    </div>
+
+    <div id="app">
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-list-item"><a class="link" href="/">首页</a></li>
+                <li class="nav-list-item"><a class="link" href="/menu">菜单</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div class="banner">
+                <img class="wps-office" src="/static/images/wpsoffice.svg" alt="">
+                <div class="wps-text">
+                    电脑/手机/平板都能用
+                    <br>
+                    随时随地，办公更高效
+                </div>
+            </div>
+            <div class="switch-bar">
+                <template v-for="(item, index) in slideList">
+                    <div class="switch-bar-item" :key="item.platform" :class="{ 'active': index === curIndex }"
+                        @click="handleSelect(index)">
+                        <div class="icon-link" :class="item.platform"></div>
+                        <span v-if="item.desc" class="desc">{{ item.desc }}</span>
+                        <template v-if="index === curIndex">
+                            <div class="progress-bar"></div>
+                            <div class="progress-bar-inner"></div>
+                        </template>
+                    </div>
+                    <div v-if="index + 1 !== slideList.length" class="devider"></div>
+                </template>
+            </div>
+            <div class="container view-port">
+                <div class="slide-list">
+                    <div v-for="(item, index) in slideList" :key="item.platform" :style="item.style"
+                        class="slide-list-item" :class="{ 'is-selected': index === curIndex }"
+                        :data-platform="item.platform" @click.stop="handleSelect(index)">
+                        <div class="slide-icon" :data-platform="item.platform"></div>
+                        <div class="system">{{ item.system }} 版本</div>
+                        <p class="desc">{{ item.desc }}</p>
+                        <a class="download-button" :href="item.url">
+                            <div class="download"><span>立即下载</span><i class="download-icon"></i></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    slideList: [{
+                        platform: 'windows',
+                        desc: '2021.11 .18 更新 / 200 MB',
+                        style: {},
+                        system: 'Windows',
+                        url: 'https://platform.wps.cn/download/query'
+                    },
+                    {
+                        platform: 'mac',
+                        desc: '2021.11.01 更新 / 546MB',
+                        style: {},
+                        system: 'Mac',
+                        url: 'https://package.mac.wpscdn.cn/mac_wps_pkg/3.9.3/WPS_Office_3.9.3(6359).dmg'
+                    },
+                    {
+                        platform: 'linux',
+                        desc: 'Linux 版本',
+                        style: {},
+                        system: 'Linux',
+                        url: 'https://www.wps.cn/product/wpslinux'
+                    },
+                    {
+                        platform: 'android',
+                        desc: '2021.11.25 更新 / 76.0MB',
+                        style: {},
+                        system: 'Android',
+                        url: 'https://pacakge.cache.wpscdn.cn/wps/download/moffice_13.17.1_2052_cn00563_multidex_bd93b220f70.apk'
+                    },
+                    {
+                        platform: 'ios',
+                        desc: '2021.10.01 更新 / 355.1MB',
+                        style: {},
+                        system: 'iOS',
+                        url: 'https://apps.apple.com/cn/app/wps-office-shen-du-jian-rongword/id599852710'
+                    }
+                    ],
+                    curIndex: 0,
+                    timer: null
+                }
+            },
+            created() {
+                this.handleSelect(0)
+            },
+            methods: {
+                handleSelect(index) {
+                    clearInterval(this.timer)
+                    this.timer = null
+                    this.curIndex = index
+                    for (let i = 0; i < this.slideList.length; i++) {
+                        let grid = Math.abs(index - i)
+                        this.slideList[i].style = {
+                            '--index-from-selected': index - i,
+                            '--z-index': 100 - grid,
+                            '--blur': 2 * grid + 'px',
+                            '--opacity': 1 - 0.2 * grid,
+                            '--scale': 1 - 0.1 * grid
+                        }
+                    }
+                    this.setTimer()
+                },
+                setTimer() {
+                    this.timer = setInterval(() => {
+                        this.curIndex++
+                        if (this.curIndex >= this.slideList.length) {
+                            this.curIndex = 0
+                        }
+                        this.handleSelect(this.curIndex)
+                    }, 5000)
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

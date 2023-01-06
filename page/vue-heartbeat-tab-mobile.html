@@ -164,12 +164,24 @@
             height: 60px;
             width: 100%;
         }
+
+        .svg-icon path, .icon path, g {
+            fill: inherit;
+        }
+
+        .svg-icon {
+            fill: currentColor;
+        }
     </style>
     <script src="../assets/js/vue.min.js"></script>
 </head>
 
 <body>
     <div id="app">
+        <div>
+            <svg-icon icon-name="android" fill="#ff0012" style="color: #ff0012" size="32"></svg-icon>
+            <svg-icon icon-name="apple" fill="#ff0012" size="32"></svg-icon>
+        </div>
         <div class="tab-wrapper">
             <div class="content" :style="{ '--scale': ratio }">
                 <div v-for="item in tabList" :key="item.index" class="tab-button"
@@ -200,6 +212,21 @@
     </div>
 
     <script>
+        Vue.component('svgIcon', {
+            props: {
+                iconName: String,
+                size: {
+                    type: [String, Number],
+                    default: 32
+                }
+            },
+            template: `<svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" :width="size" :height="size"><use :xlink:href="iconLink" style="pointer-events: none"/></svg>`,
+            computed: {
+                iconLink() {
+                    return `/assets/images/spirite.svg#icon-${this.iconName}`;
+                }
+            }
+        })
         new Vue({
             el: '#app',
             data() {
@@ -223,7 +250,7 @@
                         index: 3,
                         icon: 'shopping-cart',
                         title: '购物车'
-                    }, ],
+                    },],
                     title: '搜索',
                     stroke: '#ffffff',
                     disabled: false,

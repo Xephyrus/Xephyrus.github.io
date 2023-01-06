@@ -1,0 +1,86 @@
+.icon-link {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.windows {
+  background: url("./images/windows.svg");
+}
+
+.windows:hover,
+.switch-bar-item:hover .windows,
+.active .windows {
+  background: url("./images/windows-hover.svg");
+}
+
+.mac {
+  background: url("./images/mac.svg");
+}
+
+.mac:hover,
+.switch-bar-item:hover .mac,
+.active .mac {
+  background: url("./images/mac-hover.svg");
+}
+
+.linux {
+  background: url("./images/linux.svg");
+}
+
+.linux:hover,
+.switch-bar-item:hover .linux,
+.active .linux {
+  background: url("./images/linux-hover.svg");
+}
+
+.android {
+  background: url("./images/android.svg");
+}
+
+.android:hover,
+.switch-bar-item:hover .android,
+.active .android {
+  background: url("./images/android-hover.svg");
+}
+
+.ios {
+  background: url("./images/ios.svg");
+}
+
+.ios:hover,
+.switch-bar-item:hover .ios,
+.active .ioss {
+  background: url("./images/ios-hover.svg");
+}
+
+.slide-icon {
+  width: 64px;
+  height: 64px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 27px;
+}
+
+.slide-icon[data-platform="windows"] {
+  background: url("./slide-icon/windows-grey.svg") no-repeat 100% 100%;
+}
+
+.slide-icon[data-platform="mac"] {
+  background: url("./slide-icon/apple-grey.svg") no-repeat 100% 100%;
+}
+
+.slide-icon[data-platform="linux"] {
+  background: url("./slide-icon/linux-grey.svg") no-repeat 100% 100%;
+}
+
+.slide-icon[data-platform="android"] {
+  background: url("./slide-icon/android-grey.svg") no-repeat 100% 100%;
+}
+
+.slide-icon[data-platform="ios"] {
+  background: url("./slide-icon/ios-grey.svg") no-repeat 100% 100%;
+}
