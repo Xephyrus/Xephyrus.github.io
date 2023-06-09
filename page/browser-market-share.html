@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023年1月桌面浏览器全球市场份额</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff0055;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
+        }
+
+        input,
+        button,
+        textarea {
+            outline: none;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .link {
+            position: relative;
+            color: inherit;
+            background-image: linear-gradient(to right, var(--primary), var(--primary));
+            background-position: 0 100%;
+            background-size: 100% 1px;
+            background-repeat: no-repeat;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            color: var(--primary);
+        }
+
+        #app {
+            width: 1200px;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding-top: 20px;
+            overflow-x: hidden;
+        }
+
+        #chart-container,
+        .chart {
+            width: 1200px;
+            height: 800px;
+        }
+
+
+
+        hr {
+            margin: 24px auto;
+            border: 0;
+            border-bottom: 2px dashed #e5e7eb;
+        }
+
+        .margin-bottom-30 {
+            margin-bottom: 30px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            margin-right: 4px;
+            background: linear-gradient(90deg, #36A5ED 0%, #6EEE96 100%);
+        }
+
+        footer {
+            padding: 20px 30px;
+        }
+
+        .browser-group {
+            position: relative;
+        }
+
+        .browser-group img {
+            display: block;
+            width: 100%;
+        }
+
+        .browser-list {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            top: 0;
+            left: 0;
+        }
+
+        .browser-item {
+            height: 100%;
+            flex: 1;
+            transition: all .2s;
+        }
+
+        .browser-link {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            border: none;
+        }
+
+        @media screen and (max-width: 1220px) {
+            #app {
+                width: 100%;
+            }
+
+            #chart-container {
+                width: 96vw;
+                height: 64vw;
+                margin: 0 auto;
+            }
+
+            .chart {
+                width: 96vw;
+                height: 100vw;
+                margin: 0 auto;
+            }
+        }
+
+        .icon {
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .icon-chrome {
+            background-image: url('/images/browser/group.png');
+            background-position: 1.5% -2%;
+        }
+
+        .icon-firefox {
+            background-image: url('/images/browser/group.png');
+            background-position: 27% -2%;
+        }
+
+        .icon-opera {
+            background-image: url('/images/browser/group.png');
+            background-position: 50.5% -2%;
+        }
+
+        .icon-safari {
+            background-image: url('/images/browser/group.png');
+            background-position: 73.5% -2%;
+        }
+
+        .icon-ie {
+            background-image: url('/images/browser/group.png');
+            background-position: 100% -2%;
+        }
+
+        .icon-edge {
+            background-image: url('/images/browser/Edge.svg');
+            background-size: 80%;
+            background-position: center;
+        }
+
+        @keyframes oscillate {
+            from {
+                transform: scale(1, 1);
+            }
+
+            to {
+                transform: scale(1.3, 1.3);
+            }
+        }
+
+        .browser-item:nth-child(5) a {
+            background-size: 77%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .browser-item:nth-child(5) {
+            opacity: 0;
+        }
+
+        .browser-item:nth-child(5):hover {
+            opacity: 1;
+            background-color: #fff;
+            transition: all .2s;
+        }
+
+        .browser-item:nth-child(5) a {
+            background-image: url('/images/browser/Edge.svg');
+            transition: all .2s;
+        }
+
+        .browser-item:nth-child(5):hover a::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: inherit;
+            background-position: center center;
+            filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.50)) blur(10px);
+            z-index: 1;
+            left: 0;
+            top: 0;
+            /* animation time! */
+            /* animation: oscillate 1s cubic-bezier(.17, .67, .45, 1.32) infinite alternate; */
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="browser-group margin-bottom-30">
+            <img src="/images/browser/group.png" alt="">
+            <ul class="browser-list">
+                <li class="browser-item" title="Chrome，当今世界上最流行的桌面浏览器">
+                    <a class="browser-link" href="https://www.google.com/intl/zh-CN/chrome/" target="_blank"
+                        rel="no-referrer" aria-label="下载 Chrome 桌面版"></a>
+                </li>
+                <li class="browser-item" title="Firefox，由Mozilla开发的免费开源网络浏览器">
+                    <a class="browser-link" href="https://www.mozilla.org/" target="_blank" rel="no-referrer"
+                        aria-label="下载 Firefox 桌面版"></a>
+                </li>
+                <li class="browser-item" title="Opera支持多种操作系统">
+                    <a class="browser-link" href="https://www.opera.com/" target="_blank" rel="no-referrer"
+                        aria-label="下载 Opera 桌面版"></a>
+                </li>
+                <li class="browser-item" title="Safari是苹果公司开发的网络浏览器，是各种苹果设备的默认浏览器">
+                    <a class="browser-link" href="https://support.apple.com/downloads/safari" target="_blank"
+                        rel="no-referrer" aria-label="下载 Safari 桌面版"></a>
+                </li>
+                <li class="browser-item" title="IE曾是世界上最流行的浏览器，但如今已被Edge浏览器取代">
+                    <a class="browser-link" href="https://www.microsoft.com/download/internet-explorer.aspx"
+                        target="_blank" rel="no-referrer" aria-label="开始使用 Microsoft Edge"></a>
+                </li>
+            </ul>
+        </div>
+        <!-- <div class="margin-bottom-30" style="font-size: 0;">
+            <i class="icon icon-chrome"></i>
+            <i class="icon icon-firefox"></i>
+            <i class="icon icon-opera"></i>
+            <i class="icon icon-safari"></i>
+            <i class="icon icon-ie"></i>
+            <i class="icon icon-edge"></i>
+        </div> -->
+        <div id="chart-container"></div>
+        <div id="desktop-chart" class="chart"></div>
+        <div id="mobile-chart" class="chart"></div>
+        <footer>
+            <a href="https://gs.statcounter.com/" class="link" target="_blank" rel="no-referrer">数据来源</a>
+            <a href="https://www.makeapie.cn/echarts_content/x06vA7qS2X.html" class="link" target="_blank"
+                rel="no-referrer">玫瑰图代码</a>
+            <a href="https://mp.weixin.qq.com/s/w7TQVsmmXS0S6T3JkDV0Jw" class="link" target="_blank"
+                rel="no-referrer">玫瑰图作者</a>
+        </footer>
+    </div>
+
+    <script>
+        const browserMap = new Map([
+            ['Chrome', 'conic-gradient(from 90deg, #EF3F36 0%, #EF3F36 33.3%,  #FCD900 33.3%, #FCD900 66.7%, #5AB055 66.7%, #5AB055 100%)'],
+            ['Edge', 'conic-gradient(from 180deg, #35C1F1 0%, #34C1ED 11%,  #2FC2DF 23%, #2BC3D2 32%, #36C752 67%, #0C59A4 81%, #114A8B 100%)'],
+            ['Safari', 'radial-gradient(circle, rgba(6, 194, 231, 1) 0%, rgba(13, 184, 236, 1) 25%, rgba(18, 174, 241, 1) 50%, rgba(31, 134, 249, 1) 75%, rgba(16, 125, 221, 1) 100%)'],
+            ['Firefox', 'linear-gradient(90deg, rgba(196, 36, 130, 0.5) 0%, rgba(255, 39, 45, 0.5) 47%, rgba(255, 44, 44, 0.51) 49%, rgba(255, 122, 26, 0.72) 68%,rgba(255, 178, 13, 0.87) 83%,rgba(255, 214, 5, 0.96) 94%, #FFE302 100%)'],
+            ['Opera', 'linear-gradient(to bottom, #ff1b2d 0%, #ff1b2d 30%, #ff1b2d 61.4%, #a70014 100%)']
+        ])
+        const iconMap = new Map([
+            ['Chrome', 'Chrome.svg'],
+            ['Edge', 'Edge.svg'],
+            ['Safari', 'Safari.svg'],
+            ['Firefox', 'Firefox.svg'],
+            ['Opera', 'Opera.svg'],
+            ['360 Safe Browser', '360.png'],
+            ['IE', 'IE.svg'],
+            ['Yandex Browser', 'Yandex.svg'],
+            ['QQ Browser', 'QQ.png'],
+            ['Mozilla', 'Mozilla.svg'],
+            ['Coc Coc', 'CocCoc.svg'],
+            ['Chromium', 'Chromium.svg'],
+            ['UC Browser', 'UC.svg'],
+            ['Edge Legacy', 'EdgeLegacy.svg'],
+            ['Sogou Explorer', 'Sogou.png'],
+            ['Maxthon', 'Maxthon.png'],
+            ['Pale Moon', 'PaleMoon.png'],
+            ['Whale Browser', 'Whale.webp.png'],
+            ['Instabridge', 'Instabridge.png'],
+            ['Samsung Internet', 'SamsungInternet.svg'],
+            ['KaiOS', 'KaiOS.svg'],
+            ['Puffin', 'Puffin.png'],
+            ['Android', 'Android.png']
+        ])
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    dataStr: `Chrome 66.41
+Edge 11.08
+Safari 9.33
+Firefox 6.87
+Opera 3.41
+360 Safe Browser 0.92
+IE 0.62
+Yandex Browser 0.39
+QQ Browser 0.21
+Mozilla 0.18
+Coc Coc 0.14
+Sogou Explorer 0.11
+Edge Legacy 0.1
+Whale Browser 0.07
+UC Browser 0.04
+Chromium 0.03
+Instabridge 0.02
+Maxthon 0.02
+Pale Moon 0.01
+Other 0.04`,
+                    dataArr: []
+                }
+            },
+            methods: {
+                drawChart(selector) {
+                    let myChart = echarts.init(document.querySelector(selector))
+                    let data = [...this.dataArr].reverse()
+                    let len = data.length
+                    let xAxisData = data.map(item => item.name)
+                    let seriesData = data.map(item => item.value)
+                    let maxSeriesData = []
+                    const MAX = Math.max(...seriesData)
+                    for (let i = 0; i < seriesData.length; i++) {
+                        maxSeriesData.push(MAX)
+                    }
+                    let barLinearColors = [
+                        new echarts.graphic.LinearGradient(0, 1, 1, 1, [
+                            { offset: 0, color: "#EB3B5A" },
+                            { offset: 1, color: "#FE9C5A" }
+                        ]),
+                        new echarts.graphic.LinearGradient(0, 1, 1, 1, [
+                            { offset: 0, color: "#FA8231" },
+                            { offset: 1, color: "#FFD14C" }
+                        ]),
+                        new echarts.graphic.LinearGradient(0, 1, 1, 1, [
+                            { offset: 0, color: "#F7B731" },
+                            { offset: 1, color: "#FFEE96" }
+                        ]),
+                        new echarts.graphic.LinearGradient(0, 1, 1, 1, [
+                            { offset: 0, color: "#395CFE" },
+                            { offset: 1, color: "#2EC7CF" }
+                        ])
+                    ]
+                    function rankBarColor(cData) {
+                        let tempData = []
+                        cData.forEach((item, index) => {
+                            let rank = len - index - 1
+                            tempData.push({
+                                value: item,
+                                itemStyle: {
+                                    color: rank > 3 ? barLinearColors[3] : barLinearColors[rank]
+                                }
+                            })
+                        })
+                        return tempData
+                    }
+                    var option = option = {
+                        title: {
+                            text: '2023年1月桌面浏览器全球市场份额',
+                            textStyle:
+                            {
+                                fontSize: 24,
+                                color: '#000',
+                                lineHeight: 35,
+                                fontWeight: 500
+                            },
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            formatter(params) {
+                                return `<div><span class="dot" style="background: ${data[params[0].dataIndex]['background']};"></span>${params[0].name}: ${params[0].value}%</div>`
+                            }
+                        },
+                        legend: {},
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'value',
+                            boundaryGap: [0, 0.01],
+                            axisLabel: {
+                                formatter: '{value}%',
+                                fontSize: 14,
+                                fontWeight: 600
+                            }
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: xAxisData,
+                            axisLabel: {
+                                show: true,
+                                align: 'right',
+                                textStyle: {
+                                    color: '#333',
+                                    rich: {
+                                        index: {
+                                            color: '#9d9d9d',
+                                            fontWeight: 'bold',
+                                            fontStyle: 'italic',
+                                        },
+                                        index1: {
+                                            color: '#ff4141',
+                                            fontWeight: 'bold',
+                                            fontSize: 16,
+                                            fontStyle: 'italic',
+                                        },
+                                        index2: {
+                                            color: '#ff891a',
+                                            fontWeight: 'bold',
+                                            fontSize: 16,
+                                            fontStyle: 'italic'
+                                        },
+                                        index3: {
+                                            color: '#ffb40f',
+                                            fontWeight: 'bold',
+                                            fontSize: 16,
+                                            fontStyle: 'italic'
+                                        },
+                                        name: {
+                                            width: 8 * 16,
+                                            align: 'left',
+                                            fontWeight: 600,
+                                            textAlign: 'right'
+                                        }
+                                    }
+                                },
+                                formatter: (name) => {
+                                    let index = data.findIndex(item => item.name === name)
+                                    let rank = len - index
+                                    return [
+                                        '{' + (rank > 3 ? 'index' : 'index' + rank) + '|' + rank + '}',
+                                        '{name|' + name + '}'
+                                    ].join(' ')
+                                }
+                            },
+                        },
+                        series: [
+                            {
+                                type: 'bar',
+                                data: rankBarColor(seriesData),
+                            }
+                        ]
+                    };
+                    myChart.setOption(option)
+                    window.addEventListener('resize', () => {
+                        myChart.resize()
+                    })
+                },
+                drawRoseChart(selector, dataArr, config) {
+                    let myChart = echarts.init(document.querySelector(selector))
+                    let data = [...dataArr]
+                    let path = 'image://' + location.origin + '/images/browser/'
+                    let legendArr = data.map(item => {
+                        return {
+                            ...item,
+                            icon: path + (iconMap.get(item.name) || 'index.png')
+                        }
+                    })
+                    let browsers = data.map(item => item.name)
+                    let source = [['Browser', 'percent', 'SQRT'], ...data.map(item => [item.name, item.value, item.value * 10])]
+                    let option = {
+                        dataset: {
+                            source
+                        },
+                        toolbox: {
+                            show: false, // false则不显示工具栏
+                            feature: {
+                                saveAsImage: { show: true, type: 'png' }
+                            }
+                        },
+                        title: {
+                            text: config.title,
+                            // subtext: 'Use January 2023 data\n\n——by Xephyrus（Github account）\n\nDataSource: https://gs.statcounter.com/',
+                            x: '50%',
+                            y: '50',
+                            textStyle:
+                            {
+                                fontSize: 24,
+                                color: '#000',
+                                lineHeight: 35,
+                                fontWeight: 500
+                            },
+                        },
+                        legend: {
+                            height: 360,
+                            x: '50%',//水平位置，[left|center|right|数字]
+                            y: '200',//垂直位置，[top|center|bottom|数字]
+                            align: 'left',//字在图例的左边或右边[left|right]
+                            orient: 'vertical',//图例方向[horizontal/vertical]
+                            icon: "circle",   //图例形状[circle\rect\roundRect\triangle\diamond\pin\arrow\none]
+                            textStyle://图例文字
+                            {
+                                color: '#333',
+                                fontSize: 14,
+                                rich: {
+                                    labelName: {
+                                        fontSize: 16,
+                                        fontWeight: 600,
+                                    }
+                                }
+                            },
+                            itemHeight: 24,
+                            itemWidth: 24,
+                            data: legendArr,
+                            // legend 的解决思路可以通过在legend数组插入标题来完成
+                            formatter: function (params) {
+                                // console.log('图例参数', params)
+                                for (var i = 0; i < legendArr.length; i++) {
+                                    if (legendArr[i].name == params) {
+                                        return `${params}: ${legendArr[i].value}%`;
+                                    }
+                                }
+                            }
+                        },
+                        calculable: true,
+                        series: [
+                            {
+                                name: '半径模式',
+                                type: 'pie',
+                                clockWise: false,
+                                radius: [20, 400],
+                                center: ['40%', '60%'],
+                                roseType: 'area',
+                                encode: {
+                                    itemName: 'Browser',
+                                    value: 'SQRT'
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: function (params) {
+                                            var colorList = [
+                                                "#a71a4f", "#bc1540", "#c71b1b", "#d93824", "#ce4018", "#d15122", "#e7741b", "#e58b3d", "#e59524", "#dc9e31", "#da9c2d", "#d2b130", "#bbd337", "#8cc13f", "#67b52d", "#53b440", "#48af54", "#479c7f", "#48a698", "#57868c", "#5C76Ac"
+                                            ];
+                                            return colorList[params.dataIndex]
+                                        },
+                                        label: {
+                                            position: 'inside',
+                                            textStyle:
+                                            {
+                                                fontFamily: 'Microsoft YaHei',
+                                                color: '#FAFAFA',
+                                                fontSize: 10
+                                            },
+                                            formatter: function (params) {
+                                                if (params.data[1] > 1) { return params.data[0] + '\n' + params.data[1] + "%"; }
+                                                else { return ""; }
+                                            },
+
+                                        },
+                                    },
+                                },
+
+                            },
+                            {
+                                name: '透明圆圈',
+                                type: 'pie',
+                                radius: [10, 27],
+                                center: ['40%', '60%'],
+                                itemStyle: {
+                                    color: 'rgba(250, 250, 250, 0.3)',
+                                },
+                                data: [
+                                    { value: 10, name: '' }
+                                ]
+                            },
+                            {
+                                name: '透明圆圈',
+                                type: 'pie',
+                                radius: [10, 35],
+                                center: ['40%', '60%'],
+                                itemStyle: {
+                                    color: 'rgba(250, 250, 250, 0.3)',
+                                },
+                                data: [
+                                    { value: 10, name: '' }
+                                ]
+                            }
+                        ]
+
+                    };
+                    myChart.setOption(option)
+                    window.addEventListener('resize', () => {
+                        myChart.resize()
+                    })
+                }
+            },
+            mounted() {
+                console.log(this.dataStr.split('\n'))
+                let colorList = ['']
+                this.dataArr = this.dataStr.split('\n').map(item => {
+                    let part = item.split(' ')
+                    const value = part.pop()
+                    let name = part.join(' ')
+                    return {
+                        name,
+                        value: +value,
+                        background: browserMap.get(name) || ''
+                    }
+                })
+                console.log(this.dataArr)
+                this.drawChart('#chart-container')
+                this.drawRoseChart('#desktop-chart', this.dataArr, {
+                    title: '2023年1月桌面浏览器全球市场份额'
+                })
+                this.drawRoseChart('#mobile-chart', [
+                    {
+                        "name": "Chrome",
+                        "value": 65.38
+                    },
+                    {
+                        "name": "Safari",
+                        "value": 24.42
+                    },
+                    {
+                        "name": "Samsung Internet",
+                        "value": 4.46
+                    },
+                    {
+                        "name": "Opera",
+                        "value": 1.77
+                    },
+                    {
+                        "name": "UC Browser",
+                        "value": 1.47
+                    },
+                    {
+                        "name": "Android",
+                        "value": 0.82
+                    },
+                    {
+                        "name": "Firefox",
+                        "value": 0.5
+                    },
+                    {
+                        "name": "QQ Browser",
+                        "value": 0.24
+                    },
+                    {
+                        "name": "Edge",
+                        "value": 0.15
+                    },
+                    {
+                        "name": "Whale Browser",
+                        "value": 0.14
+                    },
+                    {
+                        "name": "Yandex Browser",
+                        "value": 0.13
+                    },
+                    {
+                        "name": "Puffin",
+                        "value": 0.13
+                    },
+                    {
+                        "name": "Coc Coc",
+                        "value": 0.11
+                    },
+                    {
+                        "name": "KaiOS",
+                        "value": 0.11
+                    },
+                    {
+                        "name": "Instabridge",
+                        "value": 0.1
+                    },
+                    {
+                        "name": "Unknown",
+                        "value": 0.03
+                    },
+                    {
+                        "name": "Other",
+                        "value": 0.03
+                    }
+                ], {
+                    title: '2023年1月移动端浏览器全球市场份额'
+                })
+            },
+        })
+    </script>
+</body>
+
+</html>

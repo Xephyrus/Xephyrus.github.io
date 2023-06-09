@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>acticle</title>
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+    <script src="/assets/js/vue.min.js"></script>
+    <link rel="prefetch stylesheet" href="/assets/fonts/BILLY_ARGEL_FONT/stylesheet.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-color: #e5e5e5 #f7f7f9;
+            /* 滑块颜色  滚动条背景颜色 */
+            scrollbar-width: thin;
+            /* 滚动条宽度有三种：thin、auto、none */
+        }
+
+        .twitter-timeline iframe {
+            scrollbar-color: #e5e5e5 #f7f7f9;
+            /* 滑块颜色  滚动条背景颜色 */
+            scrollbar-width: thin;
+            /* 滚动条宽度有三种：thin、auto、none */
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        body {
+            font-family: "Segoe UI", PingFang SC, PingFangSC-Regular, PingFangSC-Medium,
+                Helvetica Neue, Helvetica, Arial, Hiragino Sans GB, Heiti SC,
+                Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+        }
+
+        .site-nav.header {
+            width: 100%;
+            height: 80px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            /* backdrop-filter: blur(40px);
+            background: none; */
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 10px #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            padding: 0 30px;
+            z-index: 101;
+            box-sizing: border-box;
+        }
+
+        #app {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 100px;
+            padding-top: 120px;
+            font-family: Verdana, sans-serif;
+        }
+
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .salsa {
+            font-family: "Salsa", Sans-serif;
+            font-weight: 400;
+            font-size: 1.1em;
+        }
+
+        .xephyrus {
+            font-family: "BILLY ARGEL FONT";
+            font-size: 72px;
+            font-weight: 400;
+            width: 200px;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            background-image: -webkit-linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            background-color: transparent;
+            border-style: none;
+        }
+
+        button,
+        select {
+            text-transform: none;
+        }
+
+        button,
+        html [type=button],
+        [type=reset],
+        [type=submit] {
+            appearance: button;
+            -webkit-appearance: button;
+        }
+
+        .site-nav .site-nav-mobile-only {
+            position: absolute;
+            left: 16px;
+        }
+
+        .site-nav-mobile-menu {
+            top: 60px;
+        }
+
+        /* [data-node="H2"] {
+            text-indent: 1em;
+        } */
+
+        [data-node="H3"] {
+            text-indent: 1em;
+        }
+
+        /* 
+        .locked {
+            height: 100vh;
+            overflow: hidden;
+        } */
+    </style>
+    <style>
+        .picture-gallery {
+            background-color: #000;
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .picture-gallery__close {
+            cursor: pointer;
+            height: 50px;
+            padding: 10px;
+            position: absolute;
+            right: 50px;
+            top: 25px;
+            width: 50px;
+            z-index: 10;
+        }
+
+        .picture-gallery__close i {
+            background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZD0iTTEzLjQgOS40TDQuOS44QzMuOC0uMyAyLS4zLjguOC0uMyAxLjktLjMgMy43LjggNC45bDguNSA4LjVjMS4xIDEuMSAyLjkgMS4xIDQuMSAwIDEuMi0xLjEgMS4yLTIuOSAwLTR6bTI1LjcgMjUuN2wtOC42LTguNWMtMS4xLTEuMS0yLjktMS4xLTQgMHMtMS4xIDMgMCA0LjFsOC42IDguNWMxLjEgMS4xIDIuOSAxLjEgNCAwIDEuMi0xLjEgMS4yLTIuOSAwLTQuMXpNMzUuMS44TC44IDM1LjJjLTEuMSAxLjEtMS4xIDIuOSAwIDRzMi45IDEuMSA0IDBMMzkuMiA0LjljMS4xLTEuMSAxLjEtMi45IDAtNC0xLjEtMS4yLTIuOS0xLjItNC4xLS4xeiIgZmlsbD0iIzk5OTg5OSIvPjwvc3ZnPg==) 50%/contain no-repeat;
+            display: block;
+            height: 30px;
+            transform-origin: 50% 50%;
+            transition: all .4s;
+            width: 30px;
+        }
+
+        .picture-gallery__close:hover i {
+            transform: rotate(180deg);
+        }
+
+        .picture-viewer-prev,
+        .picture-gallery-prev {
+            left: 0;
+            cursor: url(/assets/pic_prev.cur), auto;
+        }
+
+        .picture-viewer-next,
+        .picture-gallery-next {
+            right: 0;
+            cursor: url(/assets/pic_next.cur), auto;
+        }
+
+        .picture-gallery__body {
+            align-items: center;
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            overflow-y: auto;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .picture-gallery-prev,
+        .picture-gallery-next {
+            height: 100%;
+            width: 100%;
+            pointer-events: all;
+            position: absolute;
+            top: 0;
+            z-index: 9;
+        }
+
+        .picture-gallery__content img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .picture-gallery-nav {
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .picture-gallery__pagination {
+            bottom: 0px;
+            height: 85px;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+        }
+
+        .picture-gallery__pagination__index {
+            color: #03a9f4;
+            font-size: 40px;
+        }
+
+        .picture-gallery__pagination__total {
+            color: hsla(0, 0%, 100%, .6);
+            font-size: 26px;
+        }
+    </style>
+    <style>
+        .mobile-gallery-nav {
+            display: none;
+        }
+
+        .mobile-gallery-prev,
+        .mobile-gallery-next {
+            height: 100%;
+            width: 50%;
+            pointer-events: all;
+            position: absolute;
+            top: 0;
+            z-index: 10;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .mobile-gallery-prev {
+            left: 0;
+        }
+
+        .mobile-gallery-next {
+            right: 0;
+        }
+
+        @media (max-width: 540px) {
+            .picture-viewer_wrap {
+                width: 100%;
+            }
+
+            .picture-viewer-control-option {
+                font-size: 12px;
+                white-space: nowrap;
+                padding: 0 8px;
+            }
+
+            .picture-gallery__content img {
+                object-fit: contain;
+            }
+
+            .picture-gallery__close {
+                right: 24px;
+                top: 32px;
+                padding: 0;
+                width: 20px;
+            }
+
+            .picture-gallery__close i {
+                width: 20px;
+                height: 20px;
+            }
+
+            .picture-gallery__pagination__index {
+                font-size: 32px;
+            }
+
+            .picture-gallery__pagination__total {
+                font-size: 20px;
+            }
+
+            .mobile-gallery-nav {
+                display: block;
+                bottom: 0;
+                left: 0;
+                pointer-events: none;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" id="google-fonts-1-css"
+        href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRochester%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CSalsa%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=auto"
+        media="all">
+    <link rel="stylesheet/less" href="/assets/css/post.less">
+    <link rel="stylesheet/less" href="/assets/css/index-page.less">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <script src="/assets/js/less.min.js"></script>
+    <script src="/assets/js/axios.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/components/prism-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism.min.css">
+    <style>
+        @media (max-width: 920px) {
+            #app {
+                padding-top: 96px;
+                padding-left: 16px;
+                padding-right: 16px;
+                overflow-x: hidden;
+            }
+
+            .site-nav.header {
+                height: 60px;
+                background-color: #ffffff;
+            }
+
+            .main-container aside {
+                display: none;
+            }
+
+            .xephyrus {
+                font-size: 42px;
+                width: 100px;
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .main-container main {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+    <script>
+        function getQueryString(name) {
+            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+        }
+        const name = getQueryString('name') || ''
+        /** root是要监听的根元素，我们要对root节点内的img元素进行监听* 这里用到Promise.all **/
+        const onAllImgLoaded = async (root) => {
+            const imgNodes = root instanceof HTMLImageElement ? [root] : root.querySelectorAll('img');
+            //为了使用Array的map方法         
+            let imgArr = Array.prototype.slice.call(imgNodes);
+            return await Promise.all(imgArr.map(img => { new Promise(resolve => { img.addEventListener('load', () => resolve(img)) }) }))
+        }
+
+        function handleCopy(text) {
+            let input = document.createElement('textarea')
+            input.className = 'copy-input' // 防止在Safari浏览器中发生抖动
+            document.body.appendChild(input)
+            input.value = text
+            input.select()
+            try {
+                document.execCommand('Copy') // 执行复制
+                console.log(
+                    '%csuccess',
+                    'color: #10CE7F; font-style: italic; padding: 2px 4px;'
+                )
+            } catch (err) {
+                console.log(
+                    '%cfail',
+                    'color: #FE007F; font-style: italic; padding: 2px 4px;'
+                )
+                return err
+            }
+            document.body.removeChild(input)
+        }
+    </script>
+</head>
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        style="position: absolute; width: 0; height: 0" aria-hidden="true" id="__SVG_SPRITE_NODE__">
+        <symbol xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon"
+            viewBox="0 0 1024 1024" id="icon-copy">
+            <path
+                d="M878.272 981.312H375.36a104.64 104.64 0 0 1-104.64-104.64V375.36c0-57.792 46.848-104.64 104.64-104.64h502.912c57.792 0 104.64 46.848 104.64 104.64v502.912c-1.6 56.192-48.448 103.04-104.64 103.04z m-502.912-616.96a10.688 10.688 0 0 0-10.944 11.008v502.912c0 6.208 4.672 10.88 10.88 10.88h502.976c6.208 0 10.88-4.672 10.88-10.88V375.36a10.688 10.688 0 0 0-10.88-10.944H375.36z"
+                fill="#000e48" p-id="2608"></path>
+            <path
+                d="M192.64 753.28h-45.312a104.64 104.64 0 0 1-104.64-104.64V147.328c0-57.792 46.848-104.64 104.64-104.64h502.912c57.792 0 104.64 46.848 104.64 104.64v49.92a46.016 46.016 0 0 1-46.848 46.912 46.08 46.08 0 0 1-46.848-46.848v-49.984a10.688 10.688 0 0 0-10.944-10.944H147.328a10.688 10.688 0 0 0-10.944 10.88v502.976c0 6.208 4.672 10.88 10.88 10.88h45.312a46.08 46.08 0 0 1 46.848 46.912c0 26.496-21.824 45.248-46.848 45.248z"
+                fill="#000e48" p-id="2609"></path>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon"
+            viewBox="0 0 1024 1024" id="icon-check-alt">
+            <path
+                d="M967.370747 193.878662c-17.766642-17.662265-46.532803-17.662265-64.299445 0L359.266945 734.487234 120.927675 499.128855c-17.766642-17.647939-46.562479-17.647939-64.299445 0-17.766642 17.662265-17.766642 46.280046 0 63.926962l270.461875 267.064498c8.916067 8.863878 20.602224 13.276375 32.278147 13.242606 11.680017 0.032746 23.373337-4.378727 32.289404-13.242606l575.713091-572.314691C985.137389 240.157685 985.137389 211.539904 967.370747 193.878662z"
+                fill="#000e48" p-id="3629"></path>
+        </symbol>
+    </svg>
+    <div id="app">
+        <header id="header" class="site-nav header">
+            <div class="site-nav-mobile-only align-center site-nav-mobile-menu-toggle" role="navigation"
+                aria-label="Toggle Navigation">
+                <svg v-show="!expanded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 16" fill="none" role="img"
+                    class="icon js-site-nav-mobile-menu-open site-nav-mobile-menu-open icon-18 fill-current"
+                    @click="expanded = !expanded">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M0 2C0 1.37868 0.50368 0.875 1.125 0.875H16.875C17.4963 0.875 18 1.37868 18 2C18 2.62132 17.4963 3.125 16.875 3.125H1.125C0.50368 3.125 0 2.62132 0 2ZM0 8C0 7.37868 0.50368 6.875 1.125 6.875H16.875C17.4963 6.875 18 7.37868 18 8C18 8.62132 17.4963 9.125 16.875 9.125H1.125C0.50368 9.125 0 8.62132 0 8ZM1.125 12.875C0.50368 12.875 0 13.3787 0 14C0 14.6213 0.50368 15.125 1.125 15.125H16.875C17.4963 15.125 18 14.6213 18 14C18 13.3787 17.4963 12.875 16.875 12.875H1.125Z">
+                    </path>
+                </svg>
+
+                <svg v-show="expanded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="currentColor"
+                    role="img"
+                    class="icon js-site-nav-mobile-menu-close site-nav-mobile-menu-close icon-24 fill-current"
+                    style="margin-left: -3px;" @click="expanded = !expanded">
+                    <path
+                        d="M7.22876 5.81455C6.83824 5.42403 6.20507 5.42403 5.81455 5.81455C5.42402 6.20507 5.42402 6.83824 5.81455 7.22876L9.58578 11L5.81455 14.7712C5.42402 15.1618 5.42402 15.7949 5.81455 16.1854C6.20507 16.576 6.83824 16.576 7.22876 16.1854L11 12.4142L14.7712 16.1854C15.1618 16.576 15.7949 16.576 16.1854 16.1854C16.576 15.7949 16.576 15.1618 16.1854 14.7712L12.4142 11L16.1854 7.22876C16.576 6.83824 16.576 6.20507 16.1854 5.81455C15.7949 5.42403 15.1618 5.42403 14.7712 5.81455L11 9.58579L7.22876 5.81455Z">
+                    </path>
+                </svg>
+            </div>
+            <a href="/">
+                <div class="xephyrus">
+                    Xephyrus
+                </div>
+            </a>
+            <div ref="mobileMenu" class="site-nav-mobile-menu js-site-nav-mobile-menu" style="display: none;">
+                <nav aria-label="primary">
+                    <ul>
+                        <li v-for="item in catalogue" :key="item.id" class="site-nav-mobile-dropdown">
+                            <input type="checkbox" checked="checked" name="dropdown" :id="item.id + '-label'">
+                            <label :for="item.id + '-label'" class="site-nav-mobile-list-item ellipsis">
+                                {{ item.text }}
+                            </label>
+                            <ul v-if="item.children.length > 0" class="site-nav-mobile-dropdown-list">
+                                <div class="site-nav-mobile-dropdown-list-container"
+                                    data-site-nav-category="Inspiration">
+                                    <li v-for="child in item.children" :key="child.id"><a
+                                            class="flex align-center ellipsis" :data-site-nav-element="child.text"
+                                            @click="handleNav(child.id)">{{ child.text }}</a></li>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div v-if="showGallery" class="picture-gallery">
+            <div class="picture-gallery__close" @click="showGallery = !showGallery"><i></i></div>
+            <div class="picture-gallery__body">
+                <div class="picture-gallery__content" :style="imageStyle">
+                    <a :href="galleryImage" target="_blank" rel="no-referrer"><img ref="pic" :src="galleryImage"
+                            @load="onLoad" alt=""></a>
+                </div>
+                <div class="picture-gallery-nav">
+                    <div v-show="showGalleryPrev" class="picture-gallery-prev" :style="{width: width + 'px'}"
+                        @click="galleryIndex--">
+                    </div>
+                    <div v-show="showGalleryNext" class="picture-gallery-next" :style="{width: width + 'px'}"
+                        @click="galleryIndex++"></div>
+                </div>
+                <div class="mobile-gallery-nav">
+                    <div v-show="showGalleryPrev" class="mobile-gallery-prev" @click="galleryIndex--">
+                    </div>
+                    <div v-show="showGalleryNext" class="mobile-gallery-next" @click="galleryIndex++"></div>
+                </div>
+            </div>
+            <div class="picture-gallery__pagination salsa"><span class="picture-gallery__pagination__index">{{
+                    galleryIndex +
+                    1
+                    }}</span> <span class="picture-gallery__pagination__total"> / {{ galleryImages.length }}</span>
+            </div>
+        </div>
+        <div class="main-container">
+            <main>
+                <article ref="article" id="article" v-html="html"></article>
+            </main>
+
+            <aside>
+                <div class="sticky-top">
+                    <div v-if="indexList.length > 0" class="markdown-toc">
+                        <ul ref="markdownToc">
+                            <li v-for="(item, index) in indexList" :key="item.index">
+                                <a :href="`#${item.id}`" :data-node="item.node" :id="`anchor-${index}`" class="ellipsis"
+                                    :class="{ 'is-active': index === activeIndex }" :title="item.text">
+                                    {{ item.text }}
+                                </a>
+                            </li>
+                            <div class="markdown-toc-bar" :style="{ '--index': activeIndex }"></div>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    html: '',
+                    indexList: [],
+                    anchors: [],
+                    topList: [],
+                    busy: false,
+                    page: 0,
+                    activeIndex: 0,
+                    title: window.title,
+                    showGallery: false,
+                    imageStyle: {},
+                    galleryImages: [],
+                    galleryIndex: 0,
+                    expanded: false,
+                    width: 0,
+                    catalogue: []
+                };
+            },
+            methods: {
+                onLoad(event) {
+                    const { target } = event
+                    this.handleResize(target)
+                },
+                handleResize(pic) {
+                    let height = pic.naturalHeight
+                    let width = pic.naturalWidth
+                    if (height <= window.innerHeight) {
+                        this.imageStyle = {
+                            width: width + 'px',
+                            height: height + 'px'
+                        }
+                        this.width = (window.innerWidth - width) / 2
+                    } else {
+                        this.imageStyle = {
+                            width: width * window.innerHeight / height + 'px',
+                            height: window.innerHeight + 'px'
+                        }
+                        this.width = (window.innerWidth - width * window.innerHeight / height) / 2
+                    }
+                },
+                findIndex() {
+                    const hash = decodeURI(location.hash)
+                    this.activeIndex = this.indexList.findIndex(item => '#' + item.id === hash)
+                    if (this.activeIndex < 0) {
+                        this.activeIndex = 0
+                    }
+                },
+                getAnchors(html) {
+                    let dom = document.createElement('div')
+                    dom.innerHTML = html
+                    const anchors = [...dom.querySelectorAll('[id]')]
+                    this.anchors = anchors.filter(item => item.id)
+                    return this.anchors.map((item, index) => ({ id: item.id, index, text: item.innerText, node: item.nodeName }))
+                },
+                bindEvent() {
+                    const article = this.$refs.article
+                    const blocks = [...article.querySelectorAll('pre code')]
+                    const images = [...article.querySelectorAll('img')]
+                    this.topList = this.anchors.map(item => document.getElementById(item.id).offsetTop)
+                    const urls = images.map(item => item.src)
+                    images.forEach((image, index) => {
+                        // 计算图片加载成功时页面高度的变化
+                        image.onload = () => {
+                            this.topList = this.anchors.map(item => document.getElementById(item.id).offsetTop)
+                            image.addEventListener('click', () => {
+                                this.galleryIndex = index
+                                this.showGallery = true
+                                this.galleryImages = urls
+                            })
+                        }
+                        image.onerror = () => {
+                            this.topList = this.anchors.map(item => document.getElementById(item.id).offsetTop)
+                        }
+                    })
+                    blocks.forEach(code => {
+                        // 实现代码块复制
+                        const wrap = document.createElement('div')
+                        wrap.classList.add('copy-wrap')
+                        article.insertBefore(wrap, code.parentNode)
+                        const copyButton = document.createElement('button')
+                        copyButton.classList.add('copy-button')
+                        copyButton.innerHTML = `<svg class="icon" aria-hidden="true" width="16" height="16"><use xlink:href="#icon-copy" /></svg>`
+                        copyButton.addEventListener('click', () => {
+                            let use = copyButton.querySelector('use')
+                            if (copyButton.dataset.busy === 'true') {
+                                return false
+                            } else {
+                                copyButton.dataset.busy = true
+                                setTimeout(() => {
+                                    copyButton.dataset.busy = 'false'
+                                }, 1000)
+                            }
+                            handleCopy(code.innerText)
+                            use.setAttribute("href", "#icon-check-alt")
+                            setTimeout(() => {
+                                use.setAttribute("href", "#icon-copy")
+                            }, 1000)
+                        })
+                        wrap.appendChild(copyButton)
+                    })
+                    if (blocks.length > 0) {
+                        setTimeout(() => {
+                            let prism = window.Prism
+                            prism.highlightAllUnder(article)
+                        }, 0)
+                    }
+                },
+                bindWindowEvent() {
+                    window.addEventListener('resize', () => {
+                        this.topList = this.anchors.map(item => document.getElementById(item.id).offsetTop)
+                    })
+                    window.addEventListener(
+                        'hashchange',
+                        () => {
+                            this.expanded = false
+                            this.busy = true
+                            setTimeout(() => {
+                                this.busy = false
+                            }, 200)
+                            this.findIndex()
+                        }
+                    );
+                    setTimeout(() => {
+                        this.handleHash()
+                        window.addEventListener('scroll', () => {
+                            if (this.busy) {
+                                return false
+                            }
+                            let list = [...this.topList]
+                            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+                            if (scrollTop <= list[0]) {
+                                this.activeIndex = 0
+                            } else {
+                                for (let i = 0; i < list.length - 1; i++) {
+                                    if (list[i] + 1 <= scrollTop && list[i + 1] > scrollTop) {
+                                        this.activeIndex = i
+                                        return false
+                                    }
+                                }
+                                // this.activeIndex = list.length - 1
+                            }
+                        })
+                    }, 2000)
+                },
+                handleTurnPage() {
+                    let page = parseInt(this.activeIndex / 8)
+                    const markdownToc = this.$refs.markdownToc
+                    markdownToc && markdownToc.scrollTo({
+                        left: 0,
+                        top: page * 240,
+                        behavior: 'smooth'
+                    })
+                },
+                async getPostData() {
+                    const article = await axios.get(`/markdown/${name}.md`)
+                    const source = article.data || ''
+                    marked.setOptions({
+                        mangle: false,
+                        headerIds: true
+                    })
+                    const renderer = {
+                        link(href, title, text) {
+                            let target = rel = ''
+                            if (href.startsWith('http')) {
+                                target = "_blank"
+                                rel = "noopener noreferrer"
+                            }
+                            return `<a href="${href}" class="link" target="${target}" rel="${rel}">${text}</a>`;
+                        },
+                    }
+                    marked.use({ renderer })
+                    let html = marked.parse(source)
+                    this.html = html
+                    this.indexList = this.getAnchors(html)
+                    let arr = []
+                    let result = this.indexList.find(item => item.node === 'H1')
+                    document.title = result?.text || article
+                    this.indexList.forEach(item => {
+                        if (item.node === 'H2') {
+                            arr.push({ ...item, children: [] })
+                        }
+                        if (item.node === 'H3') {
+                            if (arr[arr.length - 1]) {
+                                arr[arr.length - 1].children.push({ ...item })
+                            }
+                        }
+                    })
+                    this.catalogue = arr
+                },
+                handleHash() {
+                    const hash = decodeURI(location.hash)
+                    let activeIndex = this.indexList.findIndex(item => '#' + item.id === hash)
+                    if (location.hash && activeIndex > -1) {
+                        let dom = document.getElementById(location.hash.slice(1))
+                        this.busy = true
+                        setTimeout(() => {
+                            this.busy = false
+                        }, 50)
+                        dom && dom.scrollIntoView()
+                    }
+                },
+                handleNav(id) {
+                    location.href = `#${id}`
+                    this.expanded = false
+                }
+            },
+            async created() {
+                window.scrollTo(0, 0)
+                await this.getPostData()
+                this.findIndex()
+                this.$nextTick(() => {
+                    this.bindEvent()
+                    this.handleHash()
+                    this.handleTurnPage()
+                    this.bindWindowEvent()
+                })
+            }, watch: {
+                activeIndex(newVal) {
+                    let page = parseInt(newVal / 8)
+                    if (this.page !== page) {
+                        this.page = page
+                        const markdownToc = this.$refs.markdownToc
+                        this.$nextTick(() => {
+                            markdownToc && markdownToc.scrollTo({
+                                left: 0,
+                                top: page * 240,
+                                behavior: 'smooth'
+                            })
+                        })
+                    }
+                }, showGallery(status) {
+                    document.body.dataset.lock = status
+                },
+                expanded(newVal) {
+                    this.$refs.mobileMenu.style.display = newVal ? 'block' : 'none'
+                }
+            },
+            computed: {
+                galleryImage() {
+                    return this.galleryImages[this.galleryIndex] || 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
+                },
+                showGalleryPrev() {
+                    return this.galleryImages.length > 0 && this.galleryIndex > 0
+                },
+                showGalleryNext() {
+                    return this.galleryImages.length > 0 && this.galleryIndex < this.galleryImages.length - 1
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

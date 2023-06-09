@@ -10,8 +10,8 @@
 
 ## YouTube:
 
-1. 进入要分享的视频下面, 点击视频下方`分享` 按钮![](./share/2022-12-06-09-24-42-image.png)
+1. 进入要分享的视频下面, 点击视频下方`分享` 按钮![](https://xephyrus.github.io/share/2022-12-06-09-24-42-image.png)
 
-2. 随后会弹出一个弹窗, 我们继续点击`嵌入`按钮![](./share/2022-12-06-09-27-25-image.png)
+2. 随后会弹出一个弹窗, 我们继续点击`嵌入`按钮![](https://xephyrus.github.io/share/2022-12-06-09-27-25-image.png)
 
-3. 然后和Twitter一样, 复制YouTube提供的代码, 粘贴到编辑器上即可![](./share/2022-12-06-09-28-51-image.png)
+3. 然后和Twitter一样, 复制YouTube提供的代码, 粘贴到编辑器上即可![](https://xephyrus.github.io/share/2022-12-06-09-28-51-image.png)

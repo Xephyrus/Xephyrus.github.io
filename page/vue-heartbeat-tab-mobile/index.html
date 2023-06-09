@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>Vue Heartbeat Tab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            background-color: #F2F7FD;
+            transition: all 0.3s;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        #app {
+            height: 100vh;
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            overflow-y: auto;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        button,
+        input {
+            border: none;
+            outline: none;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="search"],
+        input[type="password"],
+        input[type="email"],
+        input[type="url"],
+        input[type="tel"],
+        .braintree-input,
+        .selectize-input {
+            border: 1px solid transparent;
+        }
+
+        .glass-button-group {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .glass-button {
+            width: 100px;
+            height: 100px;
+            background-color: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.3s;
+            -webkit-box-shadow: var(--box-shadow);
+            -moz-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+            margin: 20px auto;
+        }
+
+        /* .glass-button+.glass-button {
+            margin-left: 2em;
+        } */
+
+        .glass-button:hover {
+            background-color: whitesmoke;
+            transform: translateY(-5px);
+            transition: all 0.3s;
+            -webkit-box-shadow: var(--hover-box-shadow);
+            -moz-box-shadow: var(--hover-box-shadow);
+            box-shadow: var(--hover-box-shadow);
+        }
+
+        .glass-button img {
+            width: 96px;
+        }
+
+        [data-icon="twitter"] {
+            --box-shadow: 0px 20px 20px -17px rgba(0, 111, 255, 0.53);
+            --hover-box-shadow: 0px 20px 35px -16px rgba(0, 111, 255, 0.65);
+        }
+
+        [data-icon="youtube"] {
+            --box-shadow: 0px 20px 20px -17px rgba(255, 16, 39, 0.5);
+            --hover-box-shadow: 0px 20px 35px -16px rgba(255, 16, 39, 0.57);
+        }
+
+        [data-icon="soundcloud"] {
+            --box-shadow: 0px 20px 20px -17px rgba(255, 159, 16, 0.53);
+            --hover-box-shadow: 0px 20px 35px -16px rgba(255, 159, 16, 0.6);
+        }
+
+        .content {
+            margin: 0 auto;
+            height: 100px;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 24px;
+            display: flex;
+            flex-wrap: nowrap;
+            position: relative;
+            background-image: linear-gradient(to bottom, rgb(252, 139, 171) 0%, #f76174 90%, #f0516b 100%);
+        }
+
+        .tab-wrapper {
+            position: sticky;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .tab-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .tab-icon {
+            --size: 24px;
+            display: inline-block;
+            width: var(--size);
+            height: var(--size);
+            opacity: .6;
+            transition: all .2s;
+        }
+
+        .is-selected .tab-icon {
+            opacity: 1;
+        }
+
+        .svg {
+            width: 800px;
+            height: 80px;
+            transform: scale(var(--scale));
+            transform-origin: 0% 0%;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            transition: none;
+        }
+
+        .line {
+            fill: none;
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .svg-point {
+            z-index: 2;
+        }
+
+        .circle {
+            animation: bounce cubic-bezier(0.165, 0.84, 0.44, 1) .3s;
+        }
+
+        body {
+            background: url("https://cdn.mos.cms.futurecdn.net/wwN8dXsZLJK9YASy38LFbL.jpg") 50% 50% / cover;
+            background-attachment: fixed;
+        }
+
+        .glass {
+            position: relative;
+            background: inherit;
+            overflow: hidden;
+            min-height: 100px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3),
+                0 6px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass:before {
+            content: '';
+            position: absolute;
+            background: inherit;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: -20px;
+            box-shadow: inset 0 0 500px rgba(255, 255, 255, .4);
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        @keyframes bounce {
+            0% {
+                r: 10;
+            }
+
+            40% {
+                r: 14;
+            }
+
+            100% {
+                r: 10;
+            }
+        }
+
+        @-webkit-keyframes bounce {
+            0% {
+                r: 10;
+            }
+
+            40% {
+                r: 14;
+            }
+
+            100% {
+                r: 10;
+            }
+        }
+
+        @media screen and (min-width: 480px) {
+            .content {
+                height: 150px;
+            }
+
+            .svg {
+                top: 80px;
+            }
+
+            .tab-button {
+                height: 80px;
+            }
+
+            .tab-icon {
+                --size: 36px;
+            }
+        }
+
+        @media screen and (min-width: 800px) {
+            .content {
+                height: 180px;
+            }
+
+            .svg {
+                transform: none;
+                top: 100px;
+            }
+
+            .tab-button {
+                height: 100px;
+            }
+
+            .tab-icon {
+                --size: 64px;
+            }
+
+            ::-webkit-scrollbar {
+                /* 滚动条宽 */
+                width: 6px;
+                height: 6px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                /* 滚动条 拖动条 */
+                background-color: #fff5;
+                border-radius: 10px;
+                transition: all 0.2s ease-in-out;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #fff3;
+            }
+
+            ::-webkit-scrollbar-track {
+                /* 滚动条背景槽 */
+                background-color: transparent;
+            }
+        }
+
+        .head-nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 60px;
+            width: 100%;
+        }
+
+        .svg-icon path,
+        .icon path,
+        g {
+            fill: inherit;
+        }
+
+        .svg-icon {
+            fill: currentColor;
+        }
+
+        input {
+            font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 28px;
+            box-sizing: border-box;
+            width: 100%;
+            height: 40px;
+            padding: 10px 16px;
+            transition: background-color 200ms ease, outline 200ms ease, color 200ms ease, -webkit-box-shadow 200ms ease;
+            transition: background-color 200ms ease, outline 200ms ease, color 200ms ease, box-shadow 200ms ease;
+            transition: background-color 200ms ease, outline 200ms ease, color 200ms ease, box-shadow 200ms ease, -webkit-box-shadow 200ms ease;
+            border-radius: 8px;
+            outline: none;
+            background-color: #f3f3f4;
+            color: #0d0c22;
+            appearance: none;
+        }
+
+        .site-nav {
+            position: sticky;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 32px 24px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+
+        .site-nav .site-nav-mobile-search-icon {
+            position: absolute;
+            top: 52%;
+            transform: translate(12px, -50%);
+        }
+
+        .site-nav svg {
+            color: #9e9ea7;
+            vertical-align: middle;
+        }
+
+        .site-nav-mobile-menu-search {
+            position: relative;
+        }
+
+        .site-nav-mobile-search-icon {
+            position: absolute;
+            top: 52%;
+            transform: translate(12px, -50%);
+        }
+
+        .site-nav-mobile-search-input {
+            padding-right: 32px;
+            padding-left: 32px;
+        }
+
+        .site-nav-mobile-search-input:hover {
+            border-color: rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            box-shadow: 0 0 0 5px rgba(252, 139, 171, 30%);
+        }
+
+        .site-nav-mobile-search-input::placeholder {
+            color: #9e9ea7;
+        }
+
+        .fill-current {
+            fill: currentColor;
+        }
+
+        .icon.icon-16 {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        @media screen and (max-width: 800px) {
+            .wrapper {
+                transform: scale(var(--scale));
+                transform-origin: 0% 0%;
+            }
+
+            .glass {
+                width: 100%;
+                min-height: 0;
+                height: 20vw;
+            }
+
+            .site-nav {
+                padding: 16px;
+                border-bottom-left-radius: 16px;
+                border-bottom-right-radius: 16px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="./icon.css">
+    <script src="/assets/js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app" :style="{ '--scale': ratio }">
+        <div class="site-nav">
+            <form action="/search" class="site-nav-mobile-menu-search"><svg xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" viewBox="0 0 16 16" fill="none" role="img"
+                    class="icon site-nav-mobile-search-icon fill-current icon-16">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M10.6002 12.0498C9.49758 12.8568 8.13777 13.3333 6.66667 13.3333C2.98477 13.3333 0 10.3486 0 6.66667C0 2.98477 2.98477 0 6.66667 0C10.3486 0 13.3333 2.98477 13.3333 6.66667C13.3333 8.15637 12.8447 9.53194 12.019 10.6419C12.0265 10.6489 12.0338 10.656 12.0411 10.6633L15.2935 13.9157C15.6841 14.3063 15.6841 14.9394 15.2935 15.33C14.903 15.7205 14.2699 15.7205 13.8793 15.33L10.6269 12.0775C10.6178 12.0684 10.6089 12.0592 10.6002 12.0498ZM11.3333 6.66667C11.3333 9.244 9.244 11.3333 6.66667 11.3333C4.08934 11.3333 2 9.244 2 6.66667C2 4.08934 4.08934 2 6.66667 2C9.244 2 11.3333 4.08934 11.3333 6.66667Z">
+                    </path>
+                </svg> <input type="search" name="q" placeholder="Search" autocomplete="off" value=""
+                    class="site-nav-mobile-search-input"></form>
+        </div>
+        <div class="wrapper">
+            <div class="cell">
+                <div class="icon phone">
+                    <span class="receiver">
+                        <span class="inner-part part-1"></span>
+                        <span class="inner-part part-2"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon reminders">
+                    <span class="list-item i1"></span>
+                    <span class="list-item i2"></span>
+                    <span class="list-item i3"></span>
+                    <span class="list-item i4"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon passbook">
+                    <span class="plane">
+                        <span class="picto"></span>
+                        <span class="knob"></span>
+                    </span>
+                    <span class="movie">
+                        <span class="picto"></span>
+                    </span>
+                    <span class="coffee">
+                        <span class="picto"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon mail">
+                    <span class="picto">
+                        <span class="inner i1"></span>
+                        <span class="inner i2"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon photos">
+                    <span class="fan f1"></span>
+                    <span class="fan f2"></span>
+                    <span class="fan f3"></span>
+                    <span class="fan f4"></span>
+                    <span class="fan f5"></span>
+                    <span class="fan f6"></span>
+                    <span class="fan f7"></span>
+                    <span class="fan f8"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon facetime">
+                    <span class="picto"></span>
+                    <span class="lens"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon safari">
+                    <span class="compass">
+                        <span class="scale">
+                            <span class="line l1"></span>
+                            <span class="line l2"></span>
+                            <span class="line l3"></span>
+                            <span class="line l4"></span>
+                            <span class="line l5"></span>
+                            <span class="line l6"></span>
+                            <span class="line l7"></span>
+                            <span class="line l8"></span>
+                            <span class="line l9"></span>
+                            <span class="line l10 s"></span>
+                            <span class="line l11 s"></span>
+                            <span class="line l12 s"></span>
+                            <span class="line l13 s"></span>
+                            <span class="line l14 s"></span>
+                            <span class="line l15 s"></span>
+                            <span class="line l16 s"></span>
+                            <span class="line l17 s"></span>
+                            <span class="line l18 s"></span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon maps">
+                    <span class="block b1"></span>
+                    <span class="block b2"></span>
+                    <span class="block b3">
+                        <span class="sign"></span>
+                        <span class="mask m1">
+                            <span class="road r1"></span>
+                        </span>
+                        <span class="mask m2">
+                            <span class="road r2"></span>
+                        </span>
+                    </span>
+                    <span class="block b4"></span>
+                    <span class="block b5"></span>
+                    <span class="block b6"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon notes"></div>
+            </div>
+            <div class="cell">
+                <div class="icon stocks">
+                    <span class="dot"></span>
+                    <span class="line l1"></span>
+                    <span class="line l2"></span>
+                    <span class="line l3"></span>
+                    <span class="line l4"></span>
+                    <span class="line l5"></span>
+                    <span class="line l6"></span>
+                    <span class="line l7"></span>
+                    <span class="line l8"></span>
+                    <span class="line l9"></span>
+                    <span class="line l10"></span>
+                    <span class="line l11"></span>
+                    <span class="line l12"></span>
+                    <span class="line l13"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon appstore">
+                    <span class="picto">
+                        <span class="pencil"></span>
+                        <span class="crayon"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon weather">
+                    <span class="cloud"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon clock">
+                    <div class="numbers">
+                        <ol>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon newsstand">
+                    <div class="news">
+                        <span>News</span>
+                    </div>
+                    <div class="art">
+                        <span>Art</span>
+                    </div>
+                    <div class="travel">
+                        <span class="label">Travel</span>
+                        <span class="picto"></span>
+                    </div>
+                    <div class="sports">
+                        <span class="label">Sports</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon music"></div>
+            </div>
+            <div class="cell">
+                <div class="icon videos"></div>
+            </div>
+            <div class="cell">
+                <div class="icon messages"></div>
+            </div>
+            <div class="cell">
+                <div class="icon gamecenter">
+                    <div class="bubble blue"></div>
+                    <div class="bubble yellow"></div>
+                    <div class="bubble purple"></div>
+                    <div class="bubble pink"></div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon itunes"></div>
+            </div>
+            <div class="cell">
+                <div class="icon calendar">
+                    <span class="one"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon calculator">
+                    <span class="sign plus"></span>
+                    <span class="sign minus"></span>
+                    <span class="sign mul"></span>
+                    <span class="sign eq"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="icon camera">
+                    <span class="upper"></span>
+                    <span class="case"></span>
+                    <span class="knob"></span>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="glass-button" data-icon="twitter"><img src="https://i.postimg.cc/DwbWDQTx/facebook.png"
+                        alt="">
+                </div>
+
+            </div>
+            <div class="cell">
+                <div class="glass-button" data-icon="youtube"><img src="https://i.postimg.cc/LstJ4Hhf/youtube.png"
+                        alt="">
+                </div>
+            </div>
+            <div class="cell">
+                <div class="glass-button" data-icon="soundcloud"><img src="https://i.postimg.cc/tgQ1H1Rp/soundcloud.png"
+                        alt="">
+                </div>
+            </div>
+        </div>
+        <div class="tab-wrapper">
+            <div class="content">
+                <div v-for="item in tabList" :key="item.index" class="tab-button"
+                    :class="{'is-selected': activeIndex === item.index}" @click="handleClickTab(item.index)">
+                    <img class="tab-icon" :src="`/assets/images/icons/${item.icon}.svg`" alt="">
+                </div>
+                <svg class="svg svg-point" viewbox='0 0 800 80'>
+                    <circle v-if="!disabled" :class="{ circle: !disabled }" :cx="100 + 200 * pointIndex" cy="50"
+                        fill="#ffffff" r="10"></circle>
+                </svg>
+                <svg ref="svg" class="svg" :style="{ transition: transition, clip: clip }" viewbox='0 0 800 80'>
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="100%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:0" />
+                            <stop offset="30%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+                            <stop offset="70%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:0" />
+                        </linearGradient>
+                    </defs>
+                    <polyline ref="line" class="line" :points="points" :stroke="stroke"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        Vue.component('svgIcon', {
+            props: {
+                iconName: String,
+                size: {
+                    type: [String, Number],
+                    default: 32
+                }
+            },
+            template: `<svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" :width="size" :height="size"><use :xlink:href="iconLink" style="pointer-events: none"/></svg>`,
+            computed: {
+                iconLink() {
+                    return `/assets/images/spirite.svg#icon-${this.iconName}`;
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    activeIndex: 0,
+                    pointIndex: 0,
+                    showPoint: true,
+                    tabList: [{
+                        index: 0,
+                        icon: 'search',
+                        title: '搜索'
+                    }, {
+                        index: 1,
+                        icon: 'heart',
+                        title: '收藏'
+                    }, {
+                        index: 2,
+                        icon: 'message-square',
+                        title: '消息'
+                    }, {
+                        index: 3,
+                        icon: 'shopping-cart',
+                        title: '购物车'
+                    },],
+                    title: '搜索',
+                    stroke: '#ffffff',
+                    disabled: false,
+                    points: '',
+                    transition: 'none',
+                    clip: '',
+                    ratio: 1,
+                    locked: false
+                };
+            },
+            created() {
+                this.onResize()
+                window.onresize = () => {
+                    this.onResize()
+                }
+            },
+            methods: {
+                // 绘制心跳图轨迹
+                getPoints(left, right, len) {
+                    return `${100 + left * 200},50 
+                            ${150 + left * 200 + 100 * (len - 1)},50 
+                            ${162.5 + left * 200 + 100 * (len - 1)},45 
+                            ${175 + left * 200 + 100 * (len - 1)},60 
+                            ${187.5 + left * 200 + 100 * (len - 1)},10 
+                            ${200 + left * 200 + 100 * (len - 1)},70 
+                            ${212.5 + left * 200 + 100 * (len - 1)},40 
+                            ${225 + left * 200 + 100 * (len - 1)},60 
+                            ${237.5 + left * 200 + 100 * (len - 1)},40 
+                            ${250 + left * 200 + 100 * (len - 1)},50 
+                            ${100 + right * 200},50`
+                },
+                onResize() {
+                    let {
+                        clientWidth
+                    } = document.body
+                    if (clientWidth < 800) {
+                        this.ratio = document.body.clientWidth / 800
+                    }
+                },
+                handleClickTab(index) {
+                    if (this.activeIndex === index) {
+                        return false
+                    }
+                    if (this.disabled || this.locked) {
+                        return false
+                    }
+                    // 点击时节流
+                    this.locked = true
+                    this.disabled = true
+                    const {
+                        line,
+                        svg
+                    } = this.$refs
+                    this.pointIndex = index
+                    console.log(index)
+                    let left = right = index,
+                        isToRight = index > this.activeIndex
+                    isToRight ? (left = this.activeIndex) : (right = this.activeIndex)
+                    let len = right - left
+                    this.points = this.getPoints(left, right, len)
+                    if (isToRight) {
+                        this.stroke = "url(#grad1)"
+                        this.clip =
+                            `rect(0px,${this.activeIndex * 200 + 95}px,100px,${this.activeIndex * 200 + 95}px)`
+                    } else {
+                        this.stroke = "url(#grad2)"
+                        this.clip =
+                            `rect(0px,${this.activeIndex * 200 + 105}px,100px,${this.activeIndex * 200 + 105}px)`
+                    }
+                    setTimeout(() => {
+                        this.transition = 'clip 0.5s ease-out'
+                        this.clip = `rect(0px,${right * 200 + 105}px,100px,${left * 200 + 95}px)`
+                        setTimeout(() => {
+                            this.clip = isToRight ?
+                                `rect(0px,${index * 200 + 105}px,100px,${index * 200 + 95}px)` :
+                                `rect(0px,${index * 200 + 95}px,100px,${index * 200 + 95}px)`
+                            this.activeIndex = index
+                            this.disabled = false
+                            this.title = this.tabList[index]['title']
+                        }, len * 100 + 300);
+                        setTimeout(() => {
+                            this.transition = 'none'
+                            this.locked = false
+                        }, len * 100 + 700);
+                    }, 0);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

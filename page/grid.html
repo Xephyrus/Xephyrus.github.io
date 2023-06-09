@@ -8,12 +8,26 @@
     <meta name="referrer" content="no-referrer" />
     <title>grid 布局实现九宫格</title>
     <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" id="google-fonts-1-css"
+        href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRochester%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CSalsa%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=auto"
+        media="all">
+    <meta name="generator"
+        content="Elementor 3.12.1; features: e_dom_optimization, e_optimized_assets_loading, e_optimized_css_loading, a11y_improvements, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-auto">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+            /* font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; */
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font-family: "Century Gothic", "Salsa", Sans-serif;
+            font-size: 22px;
         }
 
         .container {
@@ -37,6 +51,13 @@
             grid-gap: var(--grid-gap);
             max-height: calc(var(--grid-size) * 3 + var(--grid-gap) * 2);
             overflow: hidden;
+        }
+
+        .elementor-item {
+            font-family: "Salsa", Sans-serif;
+            font-size: 25px;
+            font-weight: 400;
+            font-style: italic;
         }
 
         .image-item:nth-child(9)::after {
@@ -193,44 +214,9 @@
 </head>
 
 <body>
-    <header class="header">
-        <label for="check" class="bar">
-            <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24" data-view-component="true"
-                class="octicon octicon-three-bars">
-                <path fill-rule="evenodd"
-                    d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z">
-                </path>
-            </svg>
-        </label>
-        <input id="check" type="checkbox">
-        <nav class="header__container">
-            <a href="/" class="header__logo">
-                <svg width="120" class="ser-quick" height="40" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="instagram" x1="0" y1="0" x2="100%" y2="0">
-                            <!--Instagram-->
-                            <stop offset="0%" stop-color="#833ab4" />
-                            <stop offset="50%" stop-color="#fd1d1d" />
-                            <stop offset="100%" stop-color="#fcb045" />
-                        </linearGradient>
-                    </defs>
-                    <g>
-                        <text fill="url(#instagram)" font-style="italic" xml:space="preserve" text-anchor="start"
-                            font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif"
-                            font-size="24" id="svg_1" y="28" x="4" stroke-width="0" stroke="#000"
-                            fill="#000000">Xephyrus</text>
-                    </g>
-                </svg>
-            </a>
-            <div class="header__nav">
-                <a href="/" class="header__link">
-                    首页
-                </a>
-            </div>
-        </nav>
-    </header>
-    <div class="header__placeholder"></div>
     <main id="main" class="container">
+        <h1 class="elementor-heading-title elementor-size-default"><a href="https://bestgirlsexy.com">BestGirlSexy</a></h1>
+        <div class="elementor-item">Candy网红馆</div>
         <div v-for="i in 12" :key="i" class="item">
             <h3>宫格图片数: {{ i }}</h3>
             <div :data-number="i" class="content">
@@ -269,6 +255,7 @@
     </main>
     <script src="../assets/js/vue.min.js"></script>
     <script>
+        var cover = `data:image/svg+xml;utf-8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20120%20120%22%3E%0A%20%20%3Cpath%20fill=%22%23eee%22%20d=%22M0%200h120v120H0z%22/%3E%0A%3C/svg%3E`
         new Vue({
             el: '#main',
             data() {
@@ -276,39 +263,39 @@
                     imageVideoList: [
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F001jdTRSgx07VOiqA7Is0f0f0100ikO10k01.mov",
-                            "poster": "https://wx1.sinaimg.cn/orj360/001tqDw3gy1h1xjv6fc8dj60u0140h3l02.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjv6fc8dj60u0140h3l02.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F002gpd7Bgx07VOiqYad20f0f0100k9Pj0k01.mov",
-                            "poster": "https://wx1.sinaimg.cn/orj360/001tqDw3gy1h1xjvb7q1dj60u0140tp602.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjvb7q1dj60u0140tp602.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F003uNcJbgx07VOirdtVJ0f0f0100lX9J0k01.mov",
-                            "poster": "https://wx3.sinaimg.cn/orj360/001tqDw3gy1h1xjv8mcthj60u0140trn02.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjv8mcthj60u0140trn02.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F001eMxN6gx07VOirA6RF0f0f0100jVKq0k01.mov",
-                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3gy1h1xjva5oj1j61400u0dwq02.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjva5oj1j61400u0dwq02.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F001YZ0Ragx07VOiqmggw0f0f0100mF5A0k01.mov",
-                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3gy1h1xjv7ivtvj60u0140k8z02.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjv7ivtvj60u0140k8z02.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000JuwJbgx07VOirWIUo0f0f0100hqou0k01.mov",
-                            "poster": "https://wx2.sinaimg.cn/orj360/001tqDw3gy1h1xjvc4xzkj61400u0k4s02.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjvc4xzkj61400u0k4s02.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F003fhKktgx07VOis7YEU0f0f0100ht9O0k01.mov",
-                            "poster": "https://wx4.sinaimg.cn/orj360/001tqDw3gy1h1xjvcy1ndj60u0140guq02.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjvcy1ndj60u0140guq02.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000bzuoBgx07VOisqD5m0f0f0100h8ML0k01.mov",
-                            "poster": "https://wx1.sinaimg.cn/orj360/001tqDw3gy1h1xjve5wgwj61400u0h0302.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjve5wgwj61400u0h0302.jpg"
                         },
                         {
                             "videoPath": "https://video.weibo.com/media/play?livephoto=https%3A%2F%2Fus.sinaimg.cn%2F000omwV4gx07VOisLtsr0f0f0100gWHU0k01.mov",
-                            "poster": "https://wx3.sinaimg.cn/orj360/001tqDw3gy1h1xjvfl4wvj60u0140k7t02.jpg"
+                            "poster": "/images/example/001tqDw3gy1h1xjvfl4wvj60u0140k7t02.jpg"
                         }
                     ], imageVideoList1: [
                         {
